@@ -1,15 +1,14 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver # Use the correct driver for MySQL 8+
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/laptop_shop/
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/laptop_shop?serverTimezone=UTC&useSSL=false
     username: dev
     password: 9999
   jpa:
     hibernate:
       ddl-auto: update # Automatically update the schema based on entities
-    properties:
-      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true # Log SQL queries to the console
+    database-platform: org.hibernate.dialect.MySQLDialect
 
 server:
   port: 8080 # Set the application's port

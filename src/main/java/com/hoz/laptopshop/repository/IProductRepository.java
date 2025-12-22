@@ -1,4 +1,15 @@
 package com.hoz.laptopshop.repository;
 
-public class IProductRepository {
+import com.hoz.laptopshop.entitis.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IProductRepository extends JpaRepository<Product, Long> {
+    Product findByName(String name);
+    Product findById (long id);
+    Page<Product> findAll(Pageable page);
+
+    Page<Product> findAll(Specification<Product> spec, Pageable page);
 }
