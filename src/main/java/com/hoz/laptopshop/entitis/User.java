@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.List;
 
@@ -16,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +30,7 @@ public class User {
     @NotNull
     @Size(min = 3, message = "Fullname phải có tối thiểu 3 ký tự")
     @Column(name = "fullname")
-    private String fullname;
+    private String fullName;
     @Column(name = "address")
     private String address;
     @Column(name = "phone")

@@ -1,4 +1,4 @@
-package vn.hoidanit.laptopshop.service.validator;
+package com.hoz.laptopshop.service.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

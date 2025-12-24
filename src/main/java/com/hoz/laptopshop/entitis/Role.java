@@ -4,16 +4,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.List;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "roles")
-@ToString
+@Data
 public class Role {
     @Id
     @Column(name = "id", nullable = false)
@@ -27,6 +25,6 @@ public class Role {
     private String Description;
     // role - one => many - users
     // lưu nhiều file =>  ctrl + k . press 's'
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<User> users;
 }

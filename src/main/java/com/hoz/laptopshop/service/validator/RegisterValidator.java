@@ -1,20 +1,17 @@
-package vn.hoidanit.laptopshop.service.validator;
+package com.hoz.laptopshop.service.validator;
 
-import org.springframework.stereotype.Service;
-
+import com.hoz.laptopshop.dto.request.RegisterDTO;
+import com.hoz.laptopshop.service.IUserService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import vn.hoidanit.laptopshop.domain.dto.RegisterDTO;
-import vn.hoidanit.laptopshop.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class RegisterValidator implements ConstraintValidator<RegisterChecked, RegisterDTO> {
 
-    private final UserService userService;
-
-    public RegisterValidator(UserService userService) {
-        this.userService = userService;
-    }
+    private final IUserService userService;
 
     @Override
     public boolean isValid(RegisterDTO user, ConstraintValidatorContext context) {

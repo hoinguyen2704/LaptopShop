@@ -1,35 +1,28 @@
-package vn.hoidanit.laptopshop.service;
+package com.hoz.laptopshop.service.validator.impl;
 
-import java.util.List;
-
+import com.hoz.laptopshop.dto.request.RegisterDTO;
+import com.hoz.laptopshop.entitis.Role;
+import com.hoz.laptopshop.entitis.User;
+import com.hoz.laptopshop.repository.IOrderRepository;
+import com.hoz.laptopshop.repository.IProductRepository;
+import com.hoz.laptopshop.repository.IRoleRepository;
+import com.hoz.laptopshop.repository.IUserRepository;
+import com.hoz.laptopshop.service.IUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import vn.hoidanit.laptopshop.domain.Role;
-import vn.hoidanit.laptopshop.domain.User;
-import vn.hoidanit.laptopshop.domain.dto.RegisterDTO;
-import vn.hoidanit.laptopshop.repository.OrderRepository;
-import vn.hoidanit.laptopshop.repository.ProductRepository;
-import vn.hoidanit.laptopshop.repository.RoleRepository;
-import vn.hoidanit.laptopshop.repository.UserRepository;
+import java.util.List;
 
 @Service
-public class UserService {
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final ProductRepository productRepository;
-    private final OrderRepository orderRepository;
+@RequiredArgsConstructor
+public class UserService implements IUserService {
+    private final IUserRepository userRepository;
+    private final IRoleRepository roleRepository;
+    private final IProductRepository productRepository;
+    private final IOrderRepository orderRepository;
 
-    public UserService(UserRepository userRepository,
-            RoleRepository roleRepository,
-            ProductRepository productRepository,
-            OrderRepository orderRepository) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.productRepository = productRepository;
-        this.orderRepository = orderRepository;
-    }
 
     public Page<User> getAllUsers(Pageable page) {
         return this.userRepository.findAll(page);
@@ -40,9 +33,8 @@ public class UserService {
     }
 
     public User handleSaveUser(User user) {
-        User eric = this.userRepository.save(user);
-        System.out.println(eric);
-        return eric;
+        User response = this.userRepository.save(user);
+        return response;
     }
 
     public User getUserById(long id) {
