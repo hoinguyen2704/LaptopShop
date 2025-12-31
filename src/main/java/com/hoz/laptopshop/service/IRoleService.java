@@ -10,4 +10,6 @@ public interface IRoleService {
     Role getRoleById(long id);
 
     Role createRole(Role role);
+
+    void deleteRole(long id);
 }

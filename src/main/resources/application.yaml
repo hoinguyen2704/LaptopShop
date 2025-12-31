@@ -9,6 +9,14 @@ spring:
       ddl-auto: update # Automatically update the schema based on entities
     show-sql: true # Log SQL queries to the console
     database-platform: org.hibernate.dialect.MySQLDialect
+  servlet:
+    multipart:
+      max-file-size: 50MB # Set maximum file size for uploads
+      max-request-size: 100MB # Set maximum request size for uploads
+  security:
+    user:
+      name: user # Default username for basic authentication
+      password: 123456 # Default password for basic authentication
 
 server:
   port: 8080 # Set the application's port

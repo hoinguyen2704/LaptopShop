@@ -2,18 +2,21 @@ package com.hoz.laptopshop.controller.admin;
 
 import com.hoz.laptopshop.entitis.User;
 import com.hoz.laptopshop.service.IRoleService;
+import com.hoz.laptopshop.service.IUpLoadFileService;
 import com.hoz.laptopshop.service.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +24,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
     private final IUserService userService;
-
+    private final PasswordEncoder passwordEncoder;
     private final IRoleService roleService;
+    private final IUpLoadFileService iUploadService;
 
     @RequestMapping("/admin/user")
     public String getUserPage(Model model,
@@ -72,20 +76,19 @@ public class UserController {
     public String createUserPage(Model model,
                                  @ModelAttribute("newUser") @Valid User newUser,
                                  BindingResult newUserBindingResult,
-                                 @RequestParam("file") MultipartFile file) {
+                                 @RequestParam("avatarFile") MultipartFile file) throws IOException {
         if (newUserBindingResult.hasErrors()) {
             return "admin/user/create";
         }
-        System.out.println(file.getOriginalFilename());
+//        System.out.println(file.getOriginalFilename());
+
 
         //
-//        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
-//        String hashPassword = this.passwordEncoder.encode(newUser.getPassword());
-//        System.out.println(newUser.getRole().getName());
-//        System.out.println(roleService.getRoleByName(newUser.getRole().getName()));
-        newUser.setAvatar(file.getOriginalFilename());
-//        newUser.setPassword(hashPassword);
-        newUser.setPassword(newUser.getPassword());
+        String avatar = this.iUploadService.uploadFile("avatar", file);
+        String hashPassword = this.passwordEncoder.encode(newUser.getPassword());
+        newUser.setAvatar(avatar);
+        newUser.setPassword(hashPassword);
+//        newUser.setPassword(newUser.getPassword());
         newUser.setRole(roleService.getRoleByName(newUser.getRole().getName()));
         // save
         this.userService.handleSaveUser(newUser);

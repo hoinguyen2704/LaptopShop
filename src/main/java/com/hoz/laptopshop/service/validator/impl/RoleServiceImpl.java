@@ -30,4 +30,9 @@ public class RoleServiceImpl implements IRoleService {
     public Role createRole(Role role) {
         return roleRepository.save(role);
     }
+
+    @Override
+    public void deleteRole(long id) {
+        roleRepository.deleteById(id);
+    }
 }

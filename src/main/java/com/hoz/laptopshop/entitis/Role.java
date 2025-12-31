@@ -22,7 +22,7 @@ public class Role {
     private String name;
 
     @Column(name = "description", length = 255)
-    private String Description;
+    private String description;
     // role - one => many - users
     // lưu nhiều file =>  ctrl + k . press 's'
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

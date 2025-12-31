@@ -1,7 +1,6 @@
 package com.hoz.laptopshop.service.validator.impl;
 
 import com.hoz.laptopshop.dto.request.RegisterDTO;
-import com.hoz.laptopshop.entitis.Role;
 import com.hoz.laptopshop.entitis.User;
 import com.hoz.laptopshop.repository.IOrderRepository;
 import com.hoz.laptopshop.repository.IProductRepository;
@@ -45,10 +44,6 @@ public class UserService implements IUserService {
         this.userRepository.deleteById(id);
     }
 
-    public Role getRoleByName(String name) {
-        return this.roleRepository.findByName(name);
-    }
-
     public User registerDTOtoUser(RegisterDTO registerDTO) {
         User user = new User();
         user.setFullName(registerDTO.getFirstName() + " " + registerDTO.getLastName());
@@ -56,6 +51,7 @@ public class UserService implements IUserService {
         user.setPassword(registerDTO.getPassword());
         return user;
     }
+
 
     public boolean checkEmailExist(String email) {
         return this.userRepository.existsByEmail(email);

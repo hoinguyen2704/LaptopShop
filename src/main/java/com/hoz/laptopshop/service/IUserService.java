@@ -1,7 +1,6 @@
 package com.hoz.laptopshop.service;
 
 import com.hoz.laptopshop.dto.request.RegisterDTO;
-import com.hoz.laptopshop.entitis.Role;
 import com.hoz.laptopshop.entitis.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +18,6 @@ public interface IUserService {
 
     public void deleteAUser(long id);
 
-    public Role getRoleByName(String name);
 
     public User registerDTOtoUser(RegisterDTO registerDTO);
 
