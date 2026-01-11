@@ -68,8 +68,14 @@
 
                                                 </div>
                                                 <div class="mb-3 col-12 col-md-6">
+                                                    <c:set var="errorPhone">
+                                                        <form:errors path="phone" cssClass="invalid-feedback" />
+                                                    </c:set>
                                                     <label class="form-label">Phone number:</label>
-                                                    <form:input type="text" class="form-control" path="phone" />
+                                                    <form:input type="text"
+                                                        class="form-control form-control ${not empty errorPhone ? 'is-invalid' : ''}"
+                                                        path="phone" />
+                                                    ${errorPhone}
                                                 </div>
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <c:set var="errorFullName">

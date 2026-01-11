@@ -30,7 +30,7 @@ public class UserController {
 
     @RequestMapping("/admin/user")
     public String getUserPage(Model model,
-                              @RequestParam("page") Optional<String> pageOptional) {
+            @RequestParam("page") Optional<String> pageOptional) {
         int page = 1;
         try {
             if (pageOptional.isPresent()) {
@@ -45,7 +45,7 @@ public class UserController {
         }
 
         Pageable pageable = PageRequest.of(page - 1, 20);
-        Page<User> usersPage = this.userService.getAllUsers(pageable);
+        Page<User> usersPage = userService.getAllUsers(pageable);
         List<User> users = usersPage.getContent();
         model.addAttribute("users1", users);
 
@@ -56,13 +56,13 @@ public class UserController {
 
     @RequestMapping("/admin/user/{id}")
     public String getUserDetailPage(Model model,
-                                    @PathVariable long id) {
+            @PathVariable long id) {
         User user = userService.getUserById(id);
-//        Role role = user.getRole();
+        // Role role = user.getRole();
         model.addAttribute("user", user);
         model.addAttribute("id", id);
-//        model.addAttribute("role", role);
-//        System.out.println("Role: " + role);
+        // model.addAttribute("role", role);
+        // System.out.println("Role: " + role);
         return "admin/user/detail";
     }
 
@@ -74,21 +74,23 @@ public class UserController {
 
     @PostMapping(value = "admin/user/create")
     public String createUserPage(Model model,
-                                 @ModelAttribute("newUser") @Valid User newUser,
-                                 BindingResult newUserBindingResult,
-                                 @RequestParam("avatarFile") MultipartFile file) throws IOException {
+            @ModelAttribute("newUser") @Valid User newUser,
+            BindingResult newUserBindingResult,
+            @RequestParam("avatarFile") MultipartFile file) throws IOException {
+        // List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        // for (FieldError error : errors) {
+        // System.out.println(">>>>" + error.getField() + " - " +
+        // error.getDefaultMessage());
+        // }
+
+        // validate
         if (newUserBindingResult.hasErrors()) {
             return "admin/user/create";
         }
-//        System.out.println(file.getOriginalFilename());
-
-
-        //
-        String avatar = this.iUploadService.uploadFile("avatar", file);
-        String hashPassword = this.passwordEncoder.encode(newUser.getPassword());
+        String avatar = iUploadService.uploadFile("avatar", file);
+        String hashPassword = passwordEncoder.encode(newUser.getPassword());
         newUser.setAvatar(avatar);
         newUser.setPassword(hashPassword);
-//        newUser.setPassword(newUser.getPassword());
         newUser.setRole(roleService.getRoleByName(newUser.getRole().getName()));
         // save
         this.userService.handleSaveUser(newUser);
@@ -97,7 +99,7 @@ public class UserController {
 
     @RequestMapping("/admin/user/update/{id}") // GET
     public String getUpdateUserPage(Model model, @PathVariable long id) {
-//        User currentUser = userService.getUserById(id);
+        // User currentUser = userService.getUserById(id);
         model.addAttribute("newUser", userService.getUserById(id));
         return "admin/user/update";
     }
@@ -115,5 +117,19 @@ public class UserController {
         }
         return "redirect:/admin/user";
     }
-}
+    
+    @GetMapping("/admin/user/delete/{id}")
+    public String getDeleteUserPage(Model model, @PathVariable long id) {
+        model.addAttribute("id", id);
+        // User user = new User();
+        // user.setId(id);
+        model.addAttribute("newUser", new User());
+        return "admin/user/delete";
+    }
 
+    @PostMapping("/admin/user/delete")
+    public String postDeleteUser(Model model, @ModelAttribute("newUser") User eric) {
+        this.userService.deleteAUser(eric.getId());
+        return "redirect:/admin/user";
+    }
+}

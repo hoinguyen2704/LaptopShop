@@ -22,9 +22,12 @@ public class RegisterDTO {
     @Email(message = "Email không hợp lệ", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
+    @Size(min = 3, message = "Password phải có tối thiểu 3 ký tự")
     private String password;
 
     @Size(min = 3, message = "confirmPassword phải có tối thiểu 3 ký tự")
     private String confirmPassword;
 
+    @Size(min = 10, message = "Phone phải có tối thiểu 10 ký tự")
+    private String phone;
 }

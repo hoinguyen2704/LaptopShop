@@ -1,8 +1,8 @@
 package com.hoz.laptopshop.service.specification;
 
+import com.hoz.laptopshop.entitis.Product;
+import com.hoz.laptopshop.entitis.Product_;
 import org.springframework.data.jpa.domain.Specification;
-import vn.hoidanit.laptopshop.domain.Product;
-import vn.hoidanit.laptopshop.domain.Product_;
 
 import java.util.List;
 

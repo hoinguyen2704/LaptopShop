@@ -4,19 +4,42 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/laptop_shop?serverTimezone=UTC&useSSL=false
     username: dev
     password: 9999
+  sql:
+    init:
+      mode: always
+      platform: mysql
+  session:
+    store-type: jdbc
+    timeout: 30m
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
   jpa:
     hibernate:
       ddl-auto: update # Automatically update the schema based on entities
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      properties:
+        hibernate:
+          format_sql: true         # Định dạng SQL in ra cho dễ đọc (xuống dòng, thụt đầu dòng)
+          dialect: org.hibernate.dialect.MySQLDialect # Giúp Hibernate tối ưu SQL cho MySQL
+          # [Best Practice] Tắt Open Session In View để tránh lỗi hiệu năng tiềm ẩn
+          open-in-view: false
     show-sql: true # Log SQL queries to the console
     database-platform: org.hibernate.dialect.MySQLDialect
   servlet:
     multipart:
       max-file-size: 50MB # Set maximum file size for uploads
       max-request-size: 100MB # Set maximum request size for uploads
-  security:
-    user:
-      name: user # Default username for basic authentication
-      password: 123456 # Default password for basic authentication
+      # session-timeout: 30m # Set session timeout
+  # security:
+  #   user:
+      # name: user # Default username for basic authentication
+      # password: 123456 # Default password for basic authentication
 
 server:
   port: 8080 # Set the application's port
+
+logging:
+  level:
+    org.springframework.security: DEBUG

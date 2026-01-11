@@ -36,7 +36,9 @@
                                                     <c:set var="errorEmail">
                                                         <form:errors path="email" cssClass="invalid-feedback" />
                                                     </c:set>
-
+                                                    <c:set var="errorPhone">
+                                                        <form:errors path="phone" cssClass="invalid-feedback" />
+                                                    </c:set>
                                                     <c:set var="errorFirstName">
                                                         <form:errors path="firstName" cssClass="invalid-feedback" />
                                                     </c:set>
@@ -66,6 +68,13 @@
                                                             type="email" placeholder="name@example.com" path="email" />
                                                         <label>Email address</label>
                                                         ${errorEmail}
+                                                    </div>
+                                                    <div class="form-floating">
+                                                        <form:input
+                                                            class="form-control ${not empty errorPhone ? 'is-invalid' : ''}"
+                                                            type="phone" placeholder="Enter your phone" path="phone" />
+                                                        <label>Phone</label>
+                                                        ${errorPhone}
                                                     </div>
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">

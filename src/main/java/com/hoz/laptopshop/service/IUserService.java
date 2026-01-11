@@ -1,6 +1,7 @@
 package com.hoz.laptopshop.service;
 
 import com.hoz.laptopshop.dto.request.RegisterDTO;
+import com.hoz.laptopshop.entitis.Role;
 import com.hoz.laptopshop.entitis.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,6 @@ public interface IUserService {
 
     public void deleteAUser(long id);
 
-
     public User registerDTOtoUser(RegisterDTO registerDTO);
 
     public boolean checkEmailExist(String email);
@@ -30,4 +30,9 @@ public interface IUserService {
     public long countProducts();
 
     public long countOrders();
+
+    public Role getRoleByName(String name);
+
+    User register(RegisterDTO registerDTO);
+    
 }
