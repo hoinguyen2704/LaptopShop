@@ -50,16 +50,19 @@
                                                                 style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                                                                 ${product.shortDesc}
                                                             </p>
-                                                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                                            <div class="d-flex justify-content-center flex-lg-wrap">
                                                                 <p class="text-dark fw-bold mb-3"
-                                                                    style="font-size: 15px; text-align: center; width: 100%;">
+                                                                    style="font-size: 1.25rem; text-align: center; width: 100%;">
                                                                     <fmt:formatNumber value="${product.price}" /> đ
                                                                 </p>
-                                                                <a href="#"
-                                                                    class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                        class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                                    Add to
-                                                                    cart</a>
+                                                                <form action="/add-product-to-cart/${product.id}" method="post">
+                                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                                    <button type="submit"
+                                                                        class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                        Add to
+                                                                        cart</button>
+                                                                </form>
 
                                                             </div>
                                                         </div>

@@ -2,8 +2,10 @@ package com.hoz.laptopshop.entitis;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "roles")
 @Data
+@Builder
+@ToString
 public class Role {
     @Id
     @Column(name = "id", nullable = false)

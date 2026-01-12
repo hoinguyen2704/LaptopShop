@@ -7,12 +7,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hoz.laptopshop.dto.request.ProductCriteriaDTO;
+import com.hoz.laptopshop.entitis.Cart;
+import com.hoz.laptopshop.entitis.CartDetail;
 import com.hoz.laptopshop.entitis.Product;
+import com.hoz.laptopshop.entitis.User;
+import com.hoz.laptopshop.repository.ICartDetailRepository;
+import com.hoz.laptopshop.repository.ICartRepository;
 import com.hoz.laptopshop.repository.IProductRepository;
 import com.hoz.laptopshop.service.IProductService;
+import com.hoz.laptopshop.service.IUserService;
 import com.hoz.laptopshop.service.specification.ProductSpecs;
+
+import jakarta.servlet.http.HttpSession;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +30,9 @@ import lombok.RequiredArgsConstructor;
 // @Primary
 public class ProductServiceImpl implements IProductService {
     private final IProductRepository iProductRepository;
+    private final IUserService userService;
+    private final ICartRepository iCartRepository;
+    private final ICartDetailRepository iCartDetailRepository;
 
     @Override
     public Product getAllProductNames(String name) {
@@ -115,5 +127,57 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<Product> fetchProducts() {
         return this.iProductRepository.findAll();
+    }
+
+    @Transactional
+    public void handleAddProductToCart(String email, long productId, HttpSession session, long quantity) {
+
+        User user = this.userService.getUserByEmail(email);
+        if (user != null) {
+            // check user đã có Cart chưa ? nếu chưa -> tạo mới
+            Cart cart = this.iCartRepository.findByUser(user);
+
+            if (cart == null) {
+                // tạo mới cart
+                Cart otherCart = new Cart();
+                otherCart.setUser(user);
+                otherCart.setSum(0);
+
+                cart = this.iCartRepository.save(otherCart);
+            }
+
+            // save cart_detail
+            // tìm product by id
+
+            Optional<Product> productOptional = this.iProductRepository.findById(productId);
+            if (productOptional.isPresent()) {
+                Product realProduct = productOptional.get();
+
+                // check sản phẩm đã từng được thêm vào giỏ hàng trước đây chưa ?
+                CartDetail oldDetail = this.iCartDetailRepository.findByCartAndProduct(cart, realProduct);
+                //
+                if (oldDetail == null) {
+                    CartDetail cd = new CartDetail();
+                    cd.setCart(cart);
+                    cd.setProduct(realProduct);
+                    cd.setPrice(realProduct.getPrice());
+                    cd.setQuantity(quantity);
+                    this.iCartDetailRepository.save(cd);
+
+                    // update cart (sum);
+                    int s = cart.getSum() + 1;
+                    cart.setSum(s);
+                    this.iCartRepository.save(cart);
+                    session.setAttribute("sum", s);
+                } else {
+                    oldDetail.setQuantity(oldDetail.getQuantity() + quantity);
+                    this.iCartDetailRepository.save(oldDetail);
+                }
+            }
+        }
+    }
+
+    public Cart fetchByUser(User user) {
+        return this.iCartRepository.findByUser(user);
     }
 }

@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
@@ -48,30 +47,6 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         throw new IllegalStateException();
     }
 
-    // protected void clearAuthenticationAttributes(HttpServletRequest request,
-    // Authentication authentication) {
-    // HttpSession session = request.getSession(false);
-    // if (session == null) {
-    // return;
-    // }
-    // session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-    // // get email
-    // String email = authentication.getName();
-    // // query user
-    // User user = this.userService.getUserByEmail(email);
-    // if (user != null) {
-    // session.setAttribute("user", user);
-    // session.setAttribute("fullName", user.getFullName());
-    // session.setAttribute("avatar", user.getAvatar());
-    // session.setAttribute("id", user.getId());
-    // session.setAttribute("email", user.getEmail());
-    // // int sum = user.getCart() == null ? 0 : user.getCart().getSum();
-    // // session.setAttribute("sum", sum);
-
-    // }
-
-    // }
-
     protected void clearAuthenticationAttributes(HttpServletRequest request, Authentication authentication) {
         HttpSession session = request.getSession(false);
         if (session == null) {
@@ -80,13 +55,17 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         }
         log.info("Session is not null" + session);
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+        // get email
         String email = authentication.getName();
+        // query user
         User user = iUserService.getUserByEmail(email);
         if (user != null) {
             session.setAttribute("fullName", user.getFullName());
             session.setAttribute("avatar", user.getAvatar());
             session.setAttribute("id", user.getId());
             session.setAttribute("email", user.getEmail());
+            int sum = user.getCart() == null ? 0 : user.getCart().getSum();
+            session.setAttribute("sum", sum);
         }
 
     }

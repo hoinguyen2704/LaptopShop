@@ -2,6 +2,7 @@ package com.hoz.laptopshop.entitis;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 @Entity
+@Builder
 @Table(name = "order_details")
 public class OrderDetail implements Serializable {
     private final Long serialVersionUID = 1L;

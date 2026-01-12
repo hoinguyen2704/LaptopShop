@@ -12,9 +12,9 @@
                                 class="text-white">hozinium@gmail.com</a></small>
                     </div>
                     <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
+                        <a href="#" class="text-white"><small class="text-white mx-2">Chính sách bảo mật</small>/</a>
+                        <a href="#" class="text-white"><small class="text-white mx-2">Điều khoản sử dụng</small>/</a>
+                        <a href="#" class="text-white"><small class="text-white ms-2">Bán hàng và trả hàng</small></a>
                     </div>
                 </div>
             </div>
@@ -46,11 +46,11 @@
                         <div class="d-flex m-3 me-0">
                             <c:if test="${not empty pageContext.request.userPrincipal}">
                                 <!-- giỏ hàng -->
-                                <a href="#" class="position-relative me-4 my-auto">
+                                <a href="<c:url value='/cart'/>" class="position-relative me-4 my-auto">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                     <span
                                         class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                        style="top: -5px; left: 15px; height: 20px; min-width: 20px;"></span>
+                                        style="top: -5px; left: 15px; height: 20px; min-width: 20px;">${sessionScope.sum}</span>
                                 </a>
                                 <div class="dropdown my-auto">
                                     <a href="#" class="dropdown" role="button" id="dropdownMenuLink"

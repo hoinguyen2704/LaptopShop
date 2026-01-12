@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="mb-3 col-12 col-md-6">
                                     <label class="form-label">Price:</label>
-                                    <form:input type="number"
+                                    <form:input type="number" step="0.01"
                                                 class="form-control ${not empty errorPrice ? 'is-invalid' : ''}"
                                                 path="price"/>
                                         ${errorPrice}

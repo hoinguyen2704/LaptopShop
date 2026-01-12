@@ -1,7 +1,12 @@
 package com.hoz.laptopshop.service;
 
 import com.hoz.laptopshop.dto.request.ProductCriteriaDTO;
+import com.hoz.laptopshop.entitis.Cart;
 import com.hoz.laptopshop.entitis.Product;
+import com.hoz.laptopshop.entitis.User;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -26,4 +31,7 @@ public interface IProductService {
 
     Specification<Product> buildPriceSpecification(List<String> price);
 
+    void handleAddProductToCart(String email, long productId, HttpSession session, long quantity);
+
+    Cart fetchByUser(User user);
 }
