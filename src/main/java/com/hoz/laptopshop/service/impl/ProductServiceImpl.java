@@ -12,10 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hoz.laptopshop.dto.request.ProductCriteriaDTO;
 import com.hoz.laptopshop.entitis.Cart;
 import com.hoz.laptopshop.entitis.CartDetail;
+import com.hoz.laptopshop.entitis.Order;
+import com.hoz.laptopshop.entitis.OrderDetail;
 import com.hoz.laptopshop.entitis.Product;
 import com.hoz.laptopshop.entitis.User;
+import com.hoz.laptopshop.entitis.enums.OrderStatus;
 import com.hoz.laptopshop.repository.ICartDetailRepository;
 import com.hoz.laptopshop.repository.ICartRepository;
+import com.hoz.laptopshop.repository.IOrderDetailRepository;
+import com.hoz.laptopshop.repository.IOrderRepository;
 import com.hoz.laptopshop.repository.IProductRepository;
 import com.hoz.laptopshop.service.IProductService;
 import com.hoz.laptopshop.service.IUserService;
@@ -33,7 +38,8 @@ public class ProductServiceImpl implements IProductService {
     private final IUserService userService;
     private final ICartRepository iCartRepository;
     private final ICartDetailRepository iCartDetailRepository;
-
+    private final IOrderRepository iOrderRepository;
+    private final IOrderDetailRepository iOrderDetailRepository;
     @Override
     public Product getAllProductNames(String name) {
         return iProductRepository.findByName(name);
@@ -177,7 +183,111 @@ public class ProductServiceImpl implements IProductService {
         }
     }
 
+    @Override
     public Cart fetchByUser(User user) {
         return this.iCartRepository.findByUser(user);
+    }
+
+    @Override
+    @Transactional
+    public void handleRemoveCartDetail(long cartDetailId, HttpSession session) {
+        Optional<CartDetail> cartDetailOptional = this.iCartDetailRepository.findById(cartDetailId);
+        if (cartDetailOptional.isPresent()) {
+            CartDetail cartDetail = cartDetailOptional.get();
+
+            Cart currentCart = cartDetail.getCart();
+            // delete cart-detail
+            this.iCartDetailRepository.deleteById(cartDetailId);
+
+            // update cart
+            if (currentCart.getSum() > 1) {
+                // update current cart
+                int s = currentCart.getSum() - 1;
+                currentCart.setSum(s);
+                session.setAttribute("sum", s);
+                this.iCartRepository.save(currentCart);
+            } else {
+                // delete cart (sum = 1)
+                // Cần set user.cart = null trước khi xóa cart để tránh lỗi Hibernate
+                User user = currentCart.getUser();
+                user.setCart(null);
+                this.iCartRepository.deleteById(currentCart.getId());
+                session.setAttribute("sum", 0);
+            }
+        }
+    }
+
+    @Override
+    public void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails) {
+        for (CartDetail cartDetail : cartDetails) {
+            Optional<CartDetail> cdOptional = this.iCartDetailRepository.findById(cartDetail.getId());
+            if (cdOptional.isPresent()) {
+                CartDetail currentCartDetail = cdOptional.get();
+                currentCartDetail.setQuantity(cartDetail.getQuantity());
+                this.iCartDetailRepository.save(currentCartDetail);
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public void handlePlaceOrder(
+            User user, HttpSession session,
+            String receiverName, String receiverAddress, String receiverPhone) {
+
+        // step 1: get cart by user
+        Cart cart = this.iCartRepository.findByUser(user);
+        if (cart != null) {
+            List<CartDetail> cartDetails = cart.getCartDetails();
+
+            if (cartDetails != null) {
+
+                // create order
+                Order order = new Order();
+                order.setUser(user);
+                order.setReceiverName(receiverName);
+                order.setReceiverAddress(receiverAddress);
+                order.setReceiverPhone(receiverPhone);
+                order.setStatus(OrderStatus.PENDING);
+
+                double sum = 0;
+                for (CartDetail cd : cartDetails) {
+                    sum += cd.getPrice() * cd.getQuantity();
+                }
+                order.setTotalPrice(sum);
+                order = this.iOrderRepository.save(order);
+
+                // create orderDetail
+
+                for (CartDetail cd : cartDetails) {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setOrder(order);
+                    orderDetail.setProduct(cd.getProduct());
+                    orderDetail.setPrice(cd.getPrice());
+                    orderDetail.setQuantity(cd.getQuantity());
+                    this.iOrderDetailRepository.save(orderDetail);
+                }
+
+                // step 2: delete cart_detail and cart
+                for (CartDetail cd : cartDetails) {
+                    Product product = cd.getProduct();
+                    long newQuantity = product.getQuantity() - cd.getQuantity();
+                    product.setQuantity(newQuantity > 0 ? newQuantity : 0);
+                    // Không tăng sold ở đây, sẽ tăng khi order status chuyển sang COMPLETE
+                    // product.setSold(product.getSold() + cd.getQuantity());
+                    this.iProductRepository.save(product);
+                    this.iCartDetailRepository.deleteById(cd.getId());
+                }
+
+                // Set user.cart = null trước khi xóa để tránh lỗi Hibernate
+                User cartUser = cart.getUser();
+                cartUser.setCart(null);
+                this.iCartRepository.deleteById(cart.getId());
+
+                // step 3 : update session
+                session.setAttribute("sum", 0);
+            }
+        }
+
     }
 }

@@ -5,7 +5,9 @@ import com.hoz.laptopshop.service.impl.UserService;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -41,8 +43,8 @@ public class SecurityConfiguration {
     // .getSharedObject(AuthenticationManagerBuilder.class);
     // authenticationManagerBuilder
     // .userDetailsService(userDetailsService)
-    // .passwordEncoder(passwordEncoder); return
-    // authenticationManagerBuilder.build();
+    // .passwordEncoder(passwordEncoder);
+    // return authenticationManagerBuilder.build();
 
     // }
 
@@ -52,41 +54,42 @@ public class SecurityConfiguration {
             UserDetailsService userDetailsService) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
+        // authProvider.setHideUserNotFoundExceptions(false);
         return authProvider;
     }
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD,
-                                DispatcherType.INCLUDE)
-                        .permitAll()
-                        .requestMatchers("/", "/login", "/product/**", "/register/**", "/test-session",
-                                "/client/**", "/css/**", "/js/**",
-                                "/images/**")
-                        .permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest()
-                        .authenticated()
-                )
-                .sessionManagement((sessionManagement) -> sessionManagement
-                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                        .invalidSessionUrl("/logout?expired")
-                        .maximumSessions(100)
-                        .maxSessionsPreventsLogin(false))
+    // @Bean
+    // SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    // http.authorizeHttpRequests(authorize -> authorize
+    // .dispatcherTypeMatchers(DispatcherType.FORWARD,
+    // DispatcherType.INCLUDE)
+    // .permitAll()
+    // .requestMatchers("/", "/login", "/product/**", "/register/**",
+    // "/client/**", "/css/**", "/js/**", "/images/**")
+    // .permitAll()
+    // .requestMatchers("/admin/**").hasRole("ADMIN")
+    // .anyRequest()
+    // .authenticated()
+    // )
+    // .sessionManagement((sessionManagement) -> sessionManagement
+    // .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+    // .invalidSessionUrl("/logout?expired")
+    // .maximumSessions(100)
+    // .maxSessionsPreventsLogin(false))
 
-                .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
+    // .logout(logout ->
+    // logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
 
-                .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/login")
-                        .failureUrl("/login?error")
-                        .successHandler(customSuccessHandler())
-                        .permitAll())
-                .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
+    // .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
+    // .formLogin(formLogin -> formLogin
+    // .loginPage("/login")
+    // .failureUrl("/login?error")
+    // .successHandler(customSuccessHandler())
+    // .permitAll())
+    // .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
 
-        return http.build();
-    }
+    // return http.build();
+    // }
 
     @Bean
     public AuthenticationSuccessHandler customSuccessHandler() {
@@ -112,41 +115,40 @@ public class SecurityConfiguration {
 
     // return http.build();
     // }
-    // @Bean
-    // SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    // // v6. lamda
-    // http
-    // .authorizeHttpRequests(authorize -> authorize
-    // .dispatcherTypeMatchers(DispatcherType.FORWARD,
-    // DispatcherType.INCLUDE)
-    // .permitAll()
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // v6. lamda
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD,
+                                DispatcherType.INCLUDE)
+                        .permitAll()
 
-    // .requestMatchers("/", "/login", "/product/**", "/register", "/products/**",
-    // "/client/**", "/css/**", "/js/**", "/images/**")
-    // .permitAll()
+                        .requestMatchers("/", "/login", "/product/**", "/register", "/products/**",
+                                "/client/**", "/css/**", "/js/**", "/images/**")
+                        .permitAll()
 
-    // .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
 
-    // .anyRequest().authenticated())
+                        .anyRequest().authenticated())
 
-    // .sessionManagement((sessionManagement) -> sessionManagement
-    // .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-    // .invalidSessionUrl("/logout?expired")
-    // .maximumSessions(1)
-    // .maxSessionsPreventsLogin(false))
+                .sessionManagement((sessionManagement) -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                        .invalidSessionUrl("/logout?expired")
+                        .maximumSessions(100)
+                        .maxSessionsPreventsLogin(false))
 
-    // .logout(logout ->
-    // logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
+                .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
 
-    // .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
-    // .formLogin(formLogin -> formLogin
-    // .loginPage("/login")
-    // .failureUrl("/login?error")
-    // .successHandler(customSuccessHandler())
-    // .permitAll())
-    // .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
+                .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .failureUrl("/login?error")
+                        .successHandler(customSuccessHandler())
+                        .permitAll())
+                .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
 
-    // return http.build();
-    // }
+        return http.build();
+    }
 
 }

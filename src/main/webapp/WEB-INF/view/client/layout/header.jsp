@@ -1,5 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <style>
+            .dropdown-menu .dropdown-item:hover {
+                opacity: 0.7;
+                transition: opacity 0.3s ease;
+            }
+        </style>
         <!-- <link href="/client/css/bootstrap.min.css" rel="stylesheet"> -->
         <div class="container-fluid fixed-top">
             <div class="container topbar bg-primary d-none d-lg-block">
@@ -67,7 +73,7 @@
                                             </div>
                                         </li>
                                         <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
-                                        <li><a class="dropdown-item" href="#">Lịch sử mua hàng</a></li>
+                                        <li><a class="dropdown-item" href="<c:url value='/order-history'/>">Lịch sử mua hàng</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>

@@ -2,6 +2,7 @@ package com.hoz.laptopshop.service;
 
 import com.hoz.laptopshop.dto.request.ProductCriteriaDTO;
 import com.hoz.laptopshop.entitis.Cart;
+import com.hoz.laptopshop.entitis.CartDetail;
 import com.hoz.laptopshop.entitis.Product;
 import com.hoz.laptopshop.entitis.User;
 
@@ -34,4 +35,11 @@ public interface IProductService {
     void handleAddProductToCart(String email, long productId, HttpSession session, long quantity);
 
     Cart fetchByUser(User user);
+
+    void handleRemoveCartDetail(long cartDetailId, HttpSession session);
+
+    void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails);
+    void handlePlaceOrder(
+            User user, HttpSession session,
+            String receiverName, String receiverAddress, String receiverPhone);
 }

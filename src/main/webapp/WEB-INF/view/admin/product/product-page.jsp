@@ -25,15 +25,25 @@
                             <div class="container-fluid px-4">
                                 <h1 class="mt-4">Manage Products</h1>
                                 <ol class="breadcrumb mb-4">
-                                    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="<c:url value='/admin'/>">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Product</li>
                                 </ol>
+                                
+                                <!-- Flash Message Alert -->
+                                <c:if test="${not empty message}">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <i class="fas fa-check-circle"></i> ${message}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </c:if>
+                                
                                 <div class="mt-5">
                                     <div class="row">
                                         <div class="col-12 mx-auto">
                                             <div class="d-flex justify-content-between">
                                                 <h3>Table products</h3>
-                                                <a href="/admin/product/create" class="btn btn-primary">Create a
+                                                <a href="<c:url value='/admin/product/create' />"
+                                                    class="btn btn-primary">Create a
                                                     product</a>
                                             </div>
 
@@ -44,7 +54,10 @@
                                                         <th>ID</th>
                                                         <th>Name</th>
                                                         <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Sold</th>
                                                         <th>Factory</th>
+                                                        <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -57,14 +70,28 @@
                                                                 <fmt:formatNumber type="number"
                                                                     value="${product.price}" /> đ
                                                             </td>
+                                                            <td>${product.quantity}</td>
+                                                            <td>${product.sold}</td>
                                                             <td>${product.factory}</td>
                                                             <td>
+                                                                <c:choose>
+                                                                    <c:when test="${product.active}">
+                                                                        <span class="badge bg-success">Active</span>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <span class="badge bg-danger">Inactive</span>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+                                                            <td>
                                                                 <a href="/admin/product/${product.id}"
-                                                                    class="btn btn-success">View</a>
+                                                                    class="btn btn-success btn-sm">View</a>
                                                                 <a href="/admin/product/update/${product.id}"
-                                                                    class="btn btn-warning  mx-2">Update</a>
+                                                                    class="btn btn-warning btn-sm mx-2">Update</a>
                                                                 <a href="/admin/product/delete/${product.id}"
-                                                                    class="btn btn-danger">Delete</a>
+                                                                    class="btn ${product.active ? 'btn-secondary' : 'btn-primary'} btn-sm">
+                                                                    ${product.active ? 'Deactivate' : 'Activate'}
+                                                                </a>
                                                             </td>
                                                         </tr>
 

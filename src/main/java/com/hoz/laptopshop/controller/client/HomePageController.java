@@ -1,7 +1,10 @@
 package com.hoz.laptopshop.controller.client;
 
 import com.hoz.laptopshop.dto.request.RegisterDTO;
+import com.hoz.laptopshop.entitis.Order;
 import com.hoz.laptopshop.entitis.Product;
+import com.hoz.laptopshop.entitis.User;
+import com.hoz.laptopshop.service.IOrderService;
 import com.hoz.laptopshop.service.IProductService;
 import com.hoz.laptopshop.service.IUserService;
 
@@ -26,6 +29,7 @@ public class HomePageController {
 
     private final IProductService iProductService;
     private final IUserService iUserService;
+    private final IOrderService iOrderService;
 
     // private final PasswordEncoder passwordEncoder;
     @GetMapping("/")
@@ -78,12 +82,17 @@ public class HomePageController {
 
         return "client/auth/deny";
     }
+    
+    @GetMapping("/order-history")
+    public String getOrderHistoryPage(Model model, HttpServletRequest request) {
+        User currentUser = new User();// null
+        HttpSession session = request.getSession(false);
+        long id = (long) session.getAttribute("id");
+        currentUser.setId(id);
 
-    // @GetMapping("/test-session")
-    // @ResponseBody
-    // public String testSession(HttpServletRequest request) {
-    //     HttpSession session = request.getSession();
-    //     session.setAttribute("test", "hello");
-    //     return session.getId();
-    // }
+        List<Order> orders = this.iOrderService.fetchOrderByUser(currentUser);
+        model.addAttribute("orders", orders);
+
+        return "client/cart/order-history";
+    }
 }

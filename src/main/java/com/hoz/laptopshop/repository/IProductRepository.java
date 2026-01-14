@@ -16,4 +16,11 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findAll(Pageable page);
 
     Page<Product> findAll(Specification<Product> spec, Pageable page);
+    
+    /**
+     * Đếm số products đang active
+     * @param isActive true = active, false = inactive
+     * @return Số lượng products
+     */
+    Long countByIsActive(boolean isActive);
 }

@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col-12 mx-auto">
                             <div class="d-flex justify-content-between">
-                                <h3>Product detail with id = ${id}</h3>
+                                <h3>Product detail with id: ${id}</h3>
                             </div>
 
                             <hr/>
@@ -50,11 +50,11 @@
                                     <li class="list-group-item">Name: ${product.name}</li>
                                     <li class="list-group-item">Price: ${product.price}</li>
                                     <li class="list-group-item">Short description: ${product.shortDesc}</li>
-                                    <li class="list-group-item">Detail description: ${product.detailDesc}</li>
                                     <li class="list-group-item">Quantity: ${product.quantity}</li>
                                     <li class="list-group-item">Sold: ${product.sold}</li>
                                     <li class="list-group-item">Factory: ${product.factory}</li>
                                     <li class="list-group-item">Target: ${product.target}</li>
+                                    <li class="list-group-item">Detail description: ${product.detailDesc}</li>
                                 </ul>
                             </div>
                             <a href="/admin/product" class="btn btn-success mt-3">Back</a>

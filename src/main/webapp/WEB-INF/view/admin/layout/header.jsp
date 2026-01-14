@@ -32,7 +32,7 @@ aria-describedby="btnNavbarSearch" />
                     <hr class="dropdown-divider"/>
                 </li>
                 <li>
-                    <form method="post" action="<c:url value='/logout'/>">
+                    <form method="post" action="/logout">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <button class="dropdown-item">Logout</button>
                     </form>

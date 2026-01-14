@@ -34,7 +34,7 @@
                                                             <a href="<c:url value='/product/${product.id}'/>">
                                                                 <img src="/images/product/${product.image}"
                                                                     class="img-fluid w-100 rounded-top"
-                                                                    style="height: 250px; object-fit: cover;" alt="">
+                                                                    style="height: 300px; object-fit: cover;" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"

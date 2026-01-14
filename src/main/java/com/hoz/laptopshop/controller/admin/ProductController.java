@@ -56,7 +56,7 @@ public class ProductController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", prs.getTotalPages());
 
-        return "admin/product/show";
+        return "admin/product/product-page";
     }
 
     @GetMapping("/admin/product/create")
@@ -123,16 +123,28 @@ public class ProductController {
         return "redirect:/admin/product";
     }
 
+    /**
+     * Toggle product status (Active/Inactive)
+     * Thay vì delete, ta chỉ thay đổi trạng thái isActive
+     */
     @GetMapping("/admin/product/delete/{id}")
-    public String getDeleteProductPage(Model model, @PathVariable long id) {
-        model.addAttribute("id", id);
-        model.addAttribute("newProduct", new Product());
-        return "admin/product/delete";
-    }
-
-    @PostMapping("/admin/product/delete")
-    public String postDeleteProduct(Model model, @ModelAttribute("newProduct") Product pr) {
-        iProductService.deleteProduct(pr.getId());
+    public String toggleProductStatus(@PathVariable long id, 
+                                       org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
+        Optional<Product> productOptional = iProductService.fetchProductById(id);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            String oldStatus = product.isActive() ? "Active" : "Inactive";
+            
+            // Toggle isActive: true -> false, false -> true
+            product.setActive(!product.isActive());
+            iProductService.createProduct(product);
+            
+            String newStatus = product.isActive() ? "Active" : "Inactive";
+            
+            // Thêm flash message để hiển thị thông báo
+            redirectAttributes.addFlashAttribute("message", 
+                "Product '" + product.getName() + "' status changed from " + oldStatus + " to " + newStatus);
+        }
         return "redirect:/admin/product";
     }
 

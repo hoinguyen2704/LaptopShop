@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
-
 
 @Data
 @NoArgsConstructor
@@ -26,7 +26,8 @@ public class User {
     @NotNull
     @Size(min = 2, message = "Password phải có tối thiểu 2 ký tự")
     @Column(name = "password", nullable = false)
-    // @StrongPassword(message = "Password phải có tối thiểu 8 ký tự, 1 chữ hoa, 1 chữ thường, 1 số, 1 ký tự đặc biệt")
+    // @StrongPassword(message = "Password phải có tối thiểu 8 ký tự, 1 chữ hoa, 1
+    // chữ thường, 1 số, 1 ký tự đặc biệt")
     private String password;
     @NotNull
     @Size(min = 3, message = "Fullname phải có tối thiểu 3 ký tự")
@@ -41,8 +42,8 @@ public class User {
     private String phone;
     @Column(name = "avatar")
     private String avatar;
-    //  many user -> to one -> role
-    
+    // many user -> to one -> role
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
@@ -52,4 +53,21 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Cart cart;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

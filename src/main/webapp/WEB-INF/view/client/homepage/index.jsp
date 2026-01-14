@@ -55,14 +55,15 @@
                 <!-- Hero End -->
 
 
+
+
+
+                <!-- Laptop Shop Start-->
+                <jsp:include page="../layout/container_product.jsp" />
+                <!-- Laptop Shop End-->
                 <!-- Featurs Section Start -->
                 <jsp:include page="../layout/featurs.jsp" />
                 <!-- Featurs Section End -->
-
-
-                <!-- Fruits Shop Start-->
-                <jsp:include page="../layout/container_product.jsp" />
-                <!-- Fruits Shop End-->
                 <!-- Footer Start -->
                 <jsp:include page="../layout/footer.jsp" />
                 <!-- Copyright End -->
