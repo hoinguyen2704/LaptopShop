@@ -57,6 +57,13 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     List<ITopCustomerProjection> findTop10PotentialCustomers(
             Pageable pageable,
             @Param("status") String status);
+    
+    /**
+     * Đếm số users theo trạng thái active/inactive
+     * @param isActive true = active, false = inactive
+     * @return Số lượng users
+     */
+    Long countByIsActive(boolean isActive);
 
     /**
      * Interface projection để mapping kết quả từ native query

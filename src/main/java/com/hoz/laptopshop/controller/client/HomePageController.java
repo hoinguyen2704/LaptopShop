@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
-
 @Controller
 @RequiredArgsConstructor
 public class HomePageController {
@@ -31,7 +30,6 @@ public class HomePageController {
     private final IUserService iUserService;
     private final IOrderService iOrderService;
 
-    // private final PasswordEncoder passwordEncoder;
     @GetMapping("/")
     public String getHomePage(Model model, HttpServletRequest request) {
         List<Product> listProducts = iProductService.fetchProducts();
@@ -50,13 +48,6 @@ public class HomePageController {
         return "client/auth/signin";
     }
 
-    // @GetMapping("/register")
-    // public String getRegisterPage(Model model) {
-    // model.addAttribute("registerUser", new RegisterDTO());
-    // // model.addAttribute("checkOverLay", true);
-    // return "client/auth/signin";
-    // }
-
     @PostMapping("/register")
     public String handleRegister(
             @ModelAttribute("registerUser") @Valid RegisterDTO registerDTO,
@@ -72,17 +63,12 @@ public class HomePageController {
 
     }
 
-    // @GetMapping("/login")
-    // public String getLoginPage(Model model) {
-
-    // return "client/auth/signin";
-    // }
     @GetMapping("/access-deny")
     public String getDenyPage(Model model) {
 
         return "client/auth/deny";
     }
-    
+
     @GetMapping("/order-history")
     public String getOrderHistoryPage(Model model, HttpServletRequest request) {
         User currentUser = new User();// null

@@ -28,6 +28,76 @@
                                     <li class="breadcrumb-item"><a href="<c:url value='/admin'/>">Dashboard</a></li>
                                 </ol>
 
+                                <!-- Hero Cards - Prominent Stats -->
+                                <div class="row mb-5">
+                                    <!-- Tổng Doanh Thu 7 Ngày -->
+                                    <div class="col-xl-4 col-md-6 mb-4">
+                                        <div class="card border-0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); position: relative;">
+                                            <!-- Dark overlay for text area -->
+                                            <div class="position-absolute w-100 h-100" style="background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 60%); z-index: 0;"></div>
+                                            <div class="card-body text-white p-4 position-relative" style="z-index: 1;">
+                                                <h6 class="text-white mb-2" style="font-size: 0.9rem; font-weight: 600; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">TỔNG DOANH THU</h6>
+                                                <h2 class="mb-2" style="font-weight: 700; font-size: 2.2rem; text-shadow: 0 2px 8px rgba(0,0,0,0.4);">
+                                                    <fmt:formatNumber type="number" value="${stats.totalRevenue7Days}" /> đ
+                                                </h2>
+                                                <div style="font-size: 0.85rem; opacity: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+                                                    <c:choose>
+                                                        <c:when test="${stats.revenueGrowthPercent >= 0}">
+                                                            <i class="fas fa-arrow-up"></i> +<fmt:formatNumber value="${stats.revenueGrowthPercent}" maxFractionDigits="1"/>% so với tháng trước
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <i class="fas fa-arrow-down"></i> <fmt:formatNumber value="${stats.revenueGrowthPercent}" maxFractionDigits="1"/>% so với tháng trước
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                                <!-- Icon background glow -->
+                                                <div class="position-absolute" style="right: -10px; top: 50%; transform: translateY(-50%); width: 120px; height: 120px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); border-radius: 50%;"></div>
+                                                <i class="fas fa-dollar-sign position-absolute" style="right: 25px; top: 50%; transform: translateY(-50%); font-size: 5.5rem; color: rgba(255,255,255,0.5); filter: drop-shadow(0 0 20px rgba(255,255,255,0.6)) drop-shadow(0 0 40px rgba(255,255,255,0.4));"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Đơn Hàng Thành Công -->
+                                    <div class="col-xl-4 col-md-6 mb-4">
+                                        <div class="card border-0" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(240, 147, 251, 0.3); position: relative;">
+                                            <!-- Dark overlay for text area -->
+                                            <div class="position-absolute w-100 h-100" style="background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 60%); z-index: 0;"></div>
+                                            <div class="card-body text-white p-4 position-relative" style="z-index: 1;">
+                                                <h6 class="text-white mb-2" style="font-size: 0.9rem; font-weight: 600; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">ĐƠN HÀNG THÀNH CÔNG</h6>
+                                                <h2 class="mb-2" style="font-weight: 700; font-size: 2.2rem; text-shadow: 0 2px 8px rgba(0,0,0,0.4);">
+                                                    <fmt:formatNumber type="number" value="${stats.completedOrders}" />
+                                                </h2>
+                                                <div style="font-size: 0.85rem; opacity: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+                                                    <i class="fas fa-check-circle"></i> <fmt:formatNumber value="${stats.deliverySuccessRate}" maxFractionDigits="1"/>% tỷ lệ giao hàng thành công
+                                                </div>
+                                                <!-- Icon background glow -->
+                                                <div class="position-absolute" style="right: -10px; top: 50%; transform: translateY(-50%); width: 120px; height: 120px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); border-radius: 50%;"></div>
+                                                <i class="fas fa-shopping-cart position-absolute" style="right: 25px; top: 50%; transform: translateY(-50%); font-size: 5.5rem; color: rgba(255,255,255,0.5); filter: drop-shadow(0 0 20px rgba(255,255,255,0.6)) drop-shadow(0 0 40px rgba(255,255,255,0.4));"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Sản Phẩm Đang Hoạt Động -->
+                                    <div class="col-xl-4 col-md-6 mb-4">
+                                        <div class="card border-0" style="background: linear-gradient(135deg, #ffa726 0%, #fb8c00 100%); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(255, 167, 38, 0.3); position: relative;">
+                                            <!-- Dark overlay for text area -->
+                                            <div class="position-absolute w-100 h-100" style="background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 60%); z-index: 0;"></div>
+                                            <div class="card-body text-white p-4 position-relative" style="z-index: 1;">
+                                                <h6 class="text-white mb-2" style="font-size: 0.9rem; font-weight: 600; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">SẢN PHẨM ĐANG BÁN</h6>
+                                                 <h2 class="mb-2" style="font-weight: 700; font-size: 2.2rem; text-shadow: 0 2px 8px rgba(0,0,0,0.4);">
+                                                    <fmt:formatNumber type="number" value="${stats.activeProducts}" />
+                                                </h2>
+                                                <div style="font-size: 0.85rem; opacity: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+                                                    <i class="fas fa-box-open"></i> Kho hàng: Ổn định
+                                                </div>
+                                                <!-- Icon background glow -->
+                                                <div class="position-absolute" style="right: -10px; top: 50%; transform: translateY(-50%); width: 120px; height: 120px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); border-radius: 50%;"></div>
+                                                <i class="fas fa-tags position-absolute" style="right: 25px; top: 50%; transform: translateY(-50%); font-size: 5.5rem; color: rgba(255,255,255,0.5); filter: drop-shadow(0 0 20px rgba(255,255,255,0.6)) drop-shadow(0 0 40px rgba(255,255,255,0.4));"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- Revenue Statistics Cards -->
                                 <!-- Row 1: Revenue & Orders -->
                                 <div class="row mb-4">
@@ -67,28 +137,39 @@
                                     </div>
                                     <!-- Đơn hoàn thành -->
                                     <div class="col-xl-3 col-md-6">
-                                        <div class="card bg-info text-white mb-4">
+                                        <div class="card text-white mb-4"
+                                            style="background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div>
-                                                        <div class="small">Đơn hoàn thành</div>
-                                                        <div class="h5 mb-0">${stats.completedOrders} đơn</div>
+                                                        <div class="small"
+                                                            style="font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                                            Đơn hoàn thành</div>
+                                                        <div class="h5 mb-0"
+                                                            style="font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                                                            ${stats.completedOrders} đơn</div>
                                                     </div>
-                                                    <i class="fas fa-check-circle fa-2x"></i>
+                                                    <i class="fas fa-check-circle fa-2x" style="opacity: 0.9;"></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Đơn đang xử lý -->
                                     <div class="col-xl-3 col-md-6">
-                                        <div class="card bg-warning text-white mb-4">
+                                        <div class="card text-white mb-4"
+                                            style="background: linear-gradient(135deg, #fd7e14 0%, #ca6510 100%); box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer;"
+                                            onclick="showPieChart('processing')">
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div>
-                                                        <div class="small">Đơn đang xử lý</div>
-                                                        <div class="h5 mb-0">${stats.processingOrders} đơn</div>
+                                                        <div class="small"
+                                                            style="font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                                            Đơn đang xử lý</div>
+                                                        <div class="h5 mb-0"
+                                                            style="font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                                                            ${stats.processingOrders} đơn</div>
                                                     </div>
-                                                    <i class="fas fa-clock fa-2x"></i>
+                                                    <i class="fas fa-clock fa-2x" style="opacity: 0.9;"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -99,7 +180,8 @@
                                 <div class="row mb-4">
                                     <!-- Đơn hoàn/hủy -->
                                     <div class="col-xl-3 col-md-6">
-                                        <div class="card bg-danger text-white mb-4">
+                                        <div class="card bg-danger text-white mb-4" style="cursor: pointer;"
+                                            onclick="showPieChart('cancelled')">
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div>
@@ -113,7 +195,8 @@
                                     </div>
                                     <!-- Sản phẩm active -->
                                     <div class="col-xl-3 col-md-6">
-                                        <div class="card bg-success text-white mb-4">
+                                        <div class="card bg-success text-white mb-4" style="cursor: pointer;"
+                                            onclick="showPieChart('products')">
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div>
@@ -127,28 +210,39 @@
                                     </div>
                                     <!-- Tổng người dùng -->
                                     <div class="col-xl-3 col-md-6">
-                                        <div class="card bg-info text-white mb-4">
+                                        <div class="card text-white mb-4"
+                                            style="background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%); box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer;"
+                                            onclick="showPieChart('users')">
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div>
-                                                        <div class="small">Tổng người dùng</div>
-                                                        <div class="h5 mb-0">${stats.totalUsers} người</div>
+                                                        <div class="small"
+                                                            style="font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                                            Tổng người dùng</div>
+                                                        <div class="h5 mb-0"
+                                                            style="font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                                                            ${stats.totalUsers} người</div>
                                                     </div>
-                                                    <i class="fas fa-users fa-2x"></i>
+                                                    <i class="fas fa-users fa-2x" style="opacity: 0.9;"></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Top khách hàng -->
                                     <div class="col-xl-3 col-md-6">
-                                        <div class="card bg-secondary text-white mb-4">
+                                        <div class="card text-white mb-4"
+                                            style="background: linear-gradient(135deg, #6c757d 0%, #545b62 100%); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div>
-                                                        <div class="small">Top khách hàng</div>
-                                                        <div class="h5 mb-0">${topCustomers.size()} người</div>
+                                                        <div class="small"
+                                                            style="font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                                            Top khách hàng</div>
+                                                        <div class="h5 mb-0"
+                                                            style="font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                                                            ${topCustomers.size()} người</div>
                                                     </div>
-                                                    <i class="fas fa-star fa-2x"></i>
+                                                    <i class="fas fa-star fa-2x" style="opacity: 0.9;"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -163,7 +257,7 @@
                                                 Doanh thu 7 ngày gần nhất
                                             </div>
                                             <div class="card-body">
-                                                <canvas id="myAreaChart" width="100%" height="40"></canvas>
+                                                <canvas id="myAreaChart" width="100%" height="60"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -171,14 +265,58 @@
                                         <div class="card mb-4">
                                             <div class="card-header">
                                                 <i class="fas fa-chart-bar me-1"></i>
-                                                Bar Chart Example
+                                                Đơn Hàng 7 Ngày Gần Nhất
                                             </div>
                                             <div class="card-body">
-                                                <canvas id="myBarChart" width="100%" height="40"></canvas>
+                                                <canvas id="myBarChart" width="100%" height="60"></canvas>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <!-- Top 10 S\u1ea3n Ph\u1ea9m B\u00e1n Ch\u1ea1y Nh\u1ea5t - 1 Row, 2 Columns -->
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="card mb-4 h-100">
+                                            <div class="card-header">
+                                                <i class="fas fa-chart-bar me-1"></i>
+                                                Top 10 Sản Phẩm Bán Chạy Nhất
+                                            </div>
+                                            <div class="card-body">
+                                                <canvas id="topProductsChart" width="100%" height="50"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="card mb-4 h-100">
+                                            <div class="card-header">
+                                                <i class="fas fa-table me-1"></i>
+                                                Chi Tiết Top 10 Sản Phẩm
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-striped table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th class="text-end">Đã Bán</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach var="product" items="${stats.topSellingProducts}" varStatus="status">
+                                                            <tr>
+                                                                <td>${status.index + 1}</td>
+                                                                <td>${product.productName}</td>
+                                                                <td class="text-end"><strong>${product.soldCount}</strong></td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-table me-1"></i>
@@ -220,6 +358,25 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="modal fade" id="pieChartModal" tabindex="-1"
+                                aria-labelledby="pieChartModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content" style="overflow: visible;">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="pieChartModalLabel"></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" style="overflow: visible; min-height: 400px;">
+                                            <!-- Wrapper để center chart với padding -->
+                                            <div style="width: 60%; margin: 0 auto; padding: 40px; overflow: visible;">
+                                                <canvas id="pieChart" width="180" height="180"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </main>
 
                         <jsp:include page="../layout/footer.jsp" />
@@ -230,6 +387,12 @@
                 <script src="/js/scripts.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
                     crossorigin="anonymous"></script>
+                <!-- Chart.js Datalabels Plugin for external labels -->
+                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+                <script>
+                    // Disable datalabels globally - chỉ enable cho pie chart trong modal
+                    Chart.defaults.global.plugins.datalabels.display = false;
+                </script>
 
                 <!-- Prepare revenue data from backend (MUST be in JSP for JSTL) -->
                 <script>
@@ -245,12 +408,151 @@
                     </c:forEach>
                 </script>
 
+                <!-- Prepare top selling products data for bar chart -->
+                <script>
+                    var orderLabels = [];
+                    var completedData = [];
+                    var failedData = [];
+                    <c:forEach var="stat" items="${stats.dailyOrderStats}">
+                        orderLabels.push('${stat.date}');
+                        completedData.push(${stat.completedOrders});
+                        failedData.push(${stat.failedOrders});
+                    </c:forEach>
+                </script>
+
+                <!-- Prepare products data for horizontal bar chart -->
+                <script>
+                    var productNames = [];
+                    var productSoldCounts = [];
+                    <c:forEach var="product" items="${stats.topSellingProducts}">
+                        productNames.push('${product.productName}');
+                        productSoldCounts.push(${product.soldCount});
+                    </c:forEach>
+                </script>
+
                 <script src="/js/chart-bar-demo.js"></script>
+                <script src="/js/chart-products.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
                     crossorigin="anonymous"></script>
                 <script src="/js/datatables-simple-demo.js"></script>
                 <!-- Revenue Area Chart -->
                 <script src="/js/chart-area.js"></script>
+
+                <!-- Pie Chart for Cards -->
+                <script>
+                    var pieChartInstance = null;
+
+                    function showPieChart(type) {
+                        let chartData = {};
+                        let chartTitle = '';
+
+                        switch (type) {
+                            case 'processing':
+                                chartData = {
+                                    labels: ['Pending', 'Shipping'],
+                                    data: [${ stats.pendingOrders }, ${ stats.shippingOrders }],
+                                    colors: ['#ffc107', '#fd7e14']
+                                };
+                                chartTitle = 'Đơn đang xử lý - Chi tiết';
+                                break;
+                            case 'cancelled':
+                                chartData = {
+                                    labels: ['Cancelled', 'Returned'],
+                                    data: [${ stats.cancelledOrdersOnly }, ${ stats.returnedOrders }],
+                                    colors: ['#dc3545', '#6c757d']
+                                };
+                                chartTitle = 'Đơn hoàn/hủy - Chi tiết';
+                                break;
+                            case 'products':
+                                chartData = {
+                                    labels: ['Active', 'Inactive'],
+                                    data: [${ stats.activeProducts }, ${ stats.inactiveProducts }],
+                                    colors: ['#198754', '#6c757d']
+                                };
+                                chartTitle = 'Sản phẩm - Chi tiết';
+                                break;
+                            case 'users':
+                                chartData = {
+                                    labels: ['Active', 'Inactive'],
+                                    data: [${ stats.activeUsers }, ${ stats.inactiveUsers }],
+                                    colors: ['#0dcaf0', '#6c757d']
+                                };
+                                chartTitle = 'Người dùng - Chi tiết';
+                                break;
+                        }
+
+                        renderPieChart(chartData, chartTitle);
+                        new bootstrap.Modal(document.getElementById('pieChartModal')).show();
+                    }
+
+                    function renderPieChart(chartData, title) {
+                        // Destroy existing chart if any
+                        if (pieChartInstance) {
+                            pieChartInstance.destroy();
+                        }
+
+                        document.getElementById('pieChartModalLabel').innerText = title;
+
+                        const ctx = document.getElementById('pieChart');
+                        pieChartInstance = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: chartData.labels,
+                                datasets: [{
+                                    data: chartData.data,
+                                    backgroundColor: chartData.colors,
+                                    borderWidth: 3,
+                                    borderColor: '#fff'
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                layout: {
+                                    padding: {
+                                        left: 80,
+                                        right: 80,
+                                        top: 20,
+                                        bottom: 20
+                                    }
+                                },
+                                plugins: {
+                                    // Data labels plugin - chỉ hiển thị ở bên ngoài
+                                    datalabels: {
+                                        display: true,  // Override global disable
+                                        color: '#000',
+                                        font: {
+                                            size: 16,
+                                            weight: 'bold'
+                                        },
+                                        formatter: function (value, context) {
+                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                            const percentage = ((value / total) * 100).toFixed(1);
+                                            return value + '\n(' + percentage + '%)';
+                                        },
+                                        anchor: 'end',
+                                        align: 'end',
+                                        offset: 15,
+                                        textAlign: 'center',
+                                        clip: false
+                                    },
+                                    legend: {
+                                        position: 'bottom',
+                                        labels: {
+                                            font: {
+                                                size: 16 // Giảm từ 19px xuống 16px
+                                            },
+                                            padding: 20
+                                        }
+                                    },
+                                    tooltip: {
+                                        enabled: false  // Tắt tooltip để không hiển thị số ở giữa
+                                    }
+                                }
+                            }
+                        });
+                    }
+                </script>
             </body>
 
             </html>

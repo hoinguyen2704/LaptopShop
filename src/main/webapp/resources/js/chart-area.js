@@ -54,6 +54,14 @@ var myLineChart = new Chart(ctx, {
     ],
   },
   options: {
+    layout: {
+      padding: {
+        top: 30,
+        right: 15,
+        bottom: 10,
+        left: 15,
+      },
+    },
     scales: {
       xAxes: [
         {
@@ -72,7 +80,7 @@ var myLineChart = new Chart(ctx, {
         {
           ticks: {
             min: 0,
-            maxTicksLimit: 5,
+            maxTicksLimit: 4,
             callback: function (value, index, values) {
               return value.toLocaleString("vi-VN") + " đ";
             },

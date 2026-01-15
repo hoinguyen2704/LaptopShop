@@ -1,6 +1,7 @@
 package com.hoz.laptopshop.service;
 
 import com.hoz.laptopshop.dto.request.RegisterDTO;
+import com.hoz.laptopshop.dto.response.TopCustomerDTO;
 import com.hoz.laptopshop.entitis.Role;
 import com.hoz.laptopshop.entitis.User;
 import org.springframework.data.domain.Page;
@@ -34,5 +35,7 @@ public interface IUserService {
     public Role getRoleByName(String name);
 
     User register(RegisterDTO registerDTO);
+
+    List<TopCustomerDTO> getTop10PotentialCustomers();
     
 }

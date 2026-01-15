@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hoz.laptopshop.entitis.Product;
 import com.hoz.laptopshop.service.IProductService;
@@ -123,27 +124,23 @@ public class ProductController {
         return "redirect:/admin/product";
     }
 
-    /**
-     * Toggle product status (Active/Inactive)
-     * Thay vì delete, ta chỉ thay đổi trạng thái isActive
-     */
     @GetMapping("/admin/product/delete/{id}")
-    public String toggleProductStatus(@PathVariable long id, 
-                                       org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
+    public String toggleProductStatus(@PathVariable long id,
+            RedirectAttributes redirectAttributes) {
         Optional<Product> productOptional = iProductService.fetchProductById(id);
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
             String oldStatus = product.isActive() ? "Active" : "Inactive";
-            
+
             // Toggle isActive: true -> false, false -> true
             product.setActive(!product.isActive());
             iProductService.createProduct(product);
-            
+
             String newStatus = product.isActive() ? "Active" : "Inactive";
-            
+
             // Thêm flash message để hiển thị thông báo
-            redirectAttributes.addFlashAttribute("message", 
-                "Product '" + product.getName() + "' status changed from " + oldStatus + " to " + newStatus);
+            redirectAttributes.addFlashAttribute("message",
+                    "Product '" + product.getName() + "' status changed from " + oldStatus + " to " + newStatus);
         }
         return "redirect:/admin/product";
     }

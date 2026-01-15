@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Quản Lý</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            padding-bottom: 40px;
+        }
+
+        /* Dashboard Card Styles */
+        .card-icon {
+            font-size: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .stat-card {
+            transition: transform 0.2s;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Order History Styles */
+        .product-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #e9ecef;
+            color: #495057;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            color: #6c757d;
+            font-weight: 500;
+            padding: 12px 24px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #0d6efd;
+            border-bottom: 3px solid #0d6efd;
+            background: transparent;
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 24px;
+        }
+
+        .order-total-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+    <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
+    "react": "https://esm.sh/react@^19.2.3",
+    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+</head>
+
+<body>
+
+    <div class="container py-4">
+
+        <!-- Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h2 class="fw-bold text-dark mb-0"><i class="bi bi-shop me-2"></i>Quản Lý Cửa Hàng</h2>
+            <div class="text-muted">Xin chào, Admin</div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview"
+                    type="button" role="tab" aria-controls="overview" aria-selected="true">
+                    <i class="bi bi-grid-fill me-2"></i>Tổng Quan
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button"
+                    role="tab" aria-controls="history" aria-selected="false">
+                    <i class="bi bi-clock-history me-2"></i>Lịch Sử Mua Hàng
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+
+            <!-- TAB 1: TỔNG QUAN (DASHBOARD) -->
+            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+
+                <!-- 3 Highlighted Cards -->
+                <div class="row g-4 mb-5">
+                    <!-- Card 1: Tổng doanh thu -->
+                    <div class="col-md-4">
+                        <div class="card stat-card h-100 bg-success text-white">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h6 class="card-subtitle mb-2 opacity-75">Tổng Doanh Thu</h6>
+                                    <h3 class="card-title fw-bold">1.250.000.000 ₫</h3>
+                                    <small class="text-white-50"><i class="bi bi-arrow-up-circle"></i> +12% so với tháng
+                                        trước</small>
+                                </div>
+                                <i class="bi bi-currency-dollar card-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Đơn Hàng Thành Công -->
+                    <div class="col-md-4">
+                        <div class="card stat-card h-100 bg-primary text-white">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h6 class="card-subtitle mb-2 opacity-75">Đơn Hàng Thành Công</h6>
+                                    <h3 class="card-title fw-bold">3,450</h3>
+                                    <small class="text-white-50"><i class="bi bi-check-circle"></i> 98% tỷ lệ giao
+                                        hàng</small>
+                                </div>
+                                <i class="bi bi-cart-check card-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Sản Phẩm Bán Ra -->
+                    <div class="col-md-4">
+                        <div class="card stat-card h-100 bg-warning text-dark">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h6 class="card-subtitle mb-2 opacity-75">Sản Phẩm Đã Bán</h6>
+                                    <h3 class="card-title fw-bold">12,800</h3>
+                                    <small class="text-dark-50"><i class="bi bi-box-seam"></i> Kho hàng: Ổn định</small>
+                                </div>
+                                <i class="bi bi-tags card-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Trigger -->
+                <div class="text-center py-4 bg-white rounded-3 shadow-sm border">
+                    <h5 class="text-secondary mb-3">Phân tích thị phần trình duyệt</h5>
+                    <button type="button" class="btn btn-outline-primary px-5 rounded-pill" data-bs-toggle="modal"
+                        data-bs-target="#pieChartModal">
+                        <i class="bi bi-pie-chart-fill me-2"></i> Xem Biểu Đồ Chi Tiết
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 2: LỊCH SỬ MUA HÀNG (NEW PAGE) -->
+            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+
+                <!-- Order 1: Success -->
+                <div class="card border-0 shadow-sm mb-4 overflow-hidden">
+                    <div class="card-header bg-white py-3 border-bottom">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <span class="fw-bold text-primary me-2">#DH-2023-8821</span>
+                                <span class="text-muted small">| 24/10/2023 - 14:30</span>
+                            </div>
+                            <div class="col-md-6 text-md-end mt-2 mt-md-0">
+                                <span
+                                    class="badge bg-success bg-opacity-10 text-success border border-success px-3 py-2 rounded-pill">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Giao hàng thành công
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0 align-middle">
+                                <thead class="bg-light text-secondary small text-uppercase">
+                                    <tr>
+                                        <th class="ps-4 py-3" style="width: 45%">Sản phẩm</th>
+                                        <th class="text-center py-3">Đơn giá</th>
+                                        <th class="text-center py-3">Số lượng</th>
+                                        <th class="text-end pe-4 py-3">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="product-icon me-3"><i class="bi bi-laptop"></i></div>
+                                                <div>
+                                                    <div class="fw-bold text-dark">MacBook Pro M2</div>
+                                                    <div class="small text-muted">Màu: Space Gray | 512GB</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">45.000.000 ₫</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-end pe-4 fw-medium">45.000.000 ₫</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="product-icon me-3"><i class="bi bi-mouse"></i></div>
+                                                <div>
+                                                    <div class="fw-bold text-dark">Magic Mouse 2</div>
+                                                    <div class="small text-muted">Màu: White</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">1.800.000 ₫</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-end pe-4 fw-medium">1.800.000 ₫</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white py-3 pe-4 text-end border-top">
+                        <span class="text-muted me-3 order-total-label">Tổng thanh toán:</span>
+                        <span class="fs-4 fw-bold text-danger">46.800.000 ₫</span>
+                    </div>
+                </div>
+
+                <!-- Order 2: Shipping -->
+                <div class="card border-0 shadow-sm mb-4 overflow-hidden">
+                    <div class="card-header bg-white py-3 border-bottom">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <span class="fw-bold text-primary me-2">#DH-2023-8822</span>
+                                <span class="text-muted small">| 25/10/2023 - 09:15</span>
+                            </div>
+                            <div class="col-md-6 text-md-end mt-2 mt-md-0">
+                                <span
+                                    class="badge bg-primary bg-opacity-10 text-primary border border-primary px-3 py-2 rounded-pill">
+                                    <i class="bi bi-truck me-1"></i> Đang vận chuyển
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0 align-middle">
+                                <thead class="bg-light text-secondary small text-uppercase">
+                                    <tr>
+                                        <th class="ps-4 py-3" style="width: 45%">Sản phẩm</th>
+                                        <th class="text-center py-3">Đơn giá</th>
+                                        <th class="text-center py-3">Số lượng</th>
+                                        <th class="text-end pe-4 py-3">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="product-icon me-3"><i class="bi bi-phone"></i></div>
+                                                <div>
+                                                    <div class="fw-bold text-dark">iPhone 15 Pro Max</div>
+                                                    <div class="small text-muted">Màu: Titan Tự Nhiên | 256GB</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">34.990.000 ₫</td>
+                                        <td class="text-center">2</td>
+                                        <td class="text-end pe-4 fw-medium">69.980.000 ₫</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white py-3 pe-4 text-end border-top">
+                        <span class="text-muted me-3 order-total-label">Tổng thanh toán:</span>
+                        <span class="fs-4 fw-bold text-danger">69.980.000 ₫</span>
+                    </div>
+                </div>
+
+                <!-- Order 3: Cancelled -->
+                <div class="card border-0 shadow-sm mb-4 overflow-hidden">
+                    <div class="card-header bg-white py-3 border-bottom">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <span class="fw-bold text-primary me-2">#DH-2023-8819</span>
+                                <span class="text-muted small">| 20/10/2023 - 18:00</span>
+                            </div>
+                            <div class="col-md-6 text-md-end mt-2 mt-md-0">
+                                <span
+                                    class="badge bg-danger bg-opacity-10 text-danger border border-danger px-3 py-2 rounded-pill">
+                                    <i class="bi bi-x-circle me-1"></i> Đã hủy
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0 align-middle">
+                                <thead class="bg-light text-secondary small text-uppercase">
+                                    <tr>
+                                        <th class="ps-4 py-3" style="width: 45%">Sản phẩm</th>
+                                        <th class="text-center py-3">Đơn giá</th>
+                                        <th class="text-center py-3">Số lượng</th>
+                                        <th class="text-end pe-4 py-3">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="product-icon me-3"><i class="bi bi-headphones"></i></div>
+                                                <div>
+                                                    <div class="fw-bold text-dark">AirPods Pro 2</div>
+                                                    <div class="small text-muted">MagSafe Charging Case</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">5.990.000 ₫</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-end pe-4 fw-medium">5.990.000 ₫</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white py-3 pe-4 text-end border-top">
+                        <span class="text-muted me-3 order-total-label">Tổng thanh toán:</span>
+                        <span class="fs-4 fw-bold text-danger">5.990.000 ₫</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PIE CHART MODAL -->
+    <div class="modal fade" id="pieChartModal" tabindex="-1" aria-labelledby="pieChartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="overflow: visible;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pieChartModalLabel">Phân Bổ Thị Phần</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="overflow: visible; min-height: 400px;">
+                    <!-- Wrapper 70% với padding cho labels bên ngoài -->
+                    <div style="width: 70%; margin: 0 auto; padding: 40px 20px; overflow: visible;">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('pieChart').getContext('2d');
+
+            // Initialize Chart
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Chrome', 'Safari', 'Edge', 'Firefox', 'Khác'],
+                    datasets: [{
+                        label: 'Thị Phần',
+                        data: [65, 20, 10, 3, 2],
+                        backgroundColor: [
+                            '#4285F4', // Blue
+                            '#34A853', // Green
+                            '#FBBC05', // Yellow
+                            '#EA4335', // Red
+                            '#9CA3AF'  // Gray
+                        ],
+                        hoverOffset: 10,
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    layout: {
+                        padding: 20 // Extra internal padding
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return ` ${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

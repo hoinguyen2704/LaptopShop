@@ -28,6 +28,7 @@
                                         You tried to access a page you did not have prior
                                         authorization for.
                                     </p>
+                                    <p class="text-center text-primary">Go back to home page</p>
                                 </div>
                                 <img src="/images/deny.svg" alt="">
                             </a>
