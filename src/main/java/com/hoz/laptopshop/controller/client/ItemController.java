@@ -83,7 +83,7 @@ public class ItemController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", prs.getTotalPages());
         model.addAttribute("queryString", qs);
-        return "client/product/product";
+        return "client/product/product-page";
     }
 
     @PostMapping("/add-product-to-cart/{id}")

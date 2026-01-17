@@ -466,7 +466,7 @@
                             case 'products':
                                 chartData = {
                                     labels: ['Active', 'Inactive'],
-                                    data: [${ stats.activeProducts }, ${ stats.inactiveProducts }],
+                                    data: [${stats.activeProducts}, ${stats.inactiveProducts}],
                                     colors: ['#198754', '#6c757d']
                                 };
                                 chartTitle = 'Sản phẩm - Chi tiết';

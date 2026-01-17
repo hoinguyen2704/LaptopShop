@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hoz.laptopshop.entitis.Order;
-import com.hoz.laptopshop.entitis.enums.OrderStatus;
 import com.hoz.laptopshop.repository.IOrderRepository;
 import com.hoz.laptopshop.service.IOrderService;
 
@@ -29,7 +28,17 @@ public class OrderController {
 
     @GetMapping("/admin/order")
     public String getDashboard(Model model,
-            @RequestParam(value = "page", defaultValue = "1") int page) {
+            @RequestParam(value = "page", defaultValue = "1") Optional<String> pageOptional) {
+
+        int page = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                page = Integer.parseInt(pageOptional.get());
+            }
+        } catch (NumberFormatException e) {
+            // Nếu không parse được thì mặc định page = 1
+            // page = 1;
+        }
 
         // Tạo pageable với page size = 10, sort by createdAt DESC (mới nhất lên đầu)
         Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());

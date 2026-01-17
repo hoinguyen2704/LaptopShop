@@ -65,9 +65,6 @@ public interface IUserRepository extends JpaRepository<User, Long> {
      */
     Long countByIsActive(boolean isActive);
 
-    /**
-     * Interface projection để mapping kết quả từ native query
-     */
     interface ITopCustomerProjection {
         Long getId();
 

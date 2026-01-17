@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,14 +45,14 @@ public class UserController {
             // TODO: handle exception
         }
 
-        Pageable pageable = PageRequest.of(page - 1, 20);
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
         Page<User> usersPage = userService.getAllUsers(pageable);
         List<User> users = usersPage.getContent();
         model.addAttribute("users1", users);
 
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", usersPage.getTotalPages());
-        return "admin/user/show";
+        return "admin/user/user-page";
     }
 
     @RequestMapping("/admin/user/{id}")
@@ -69,6 +70,7 @@ public class UserController {
     @GetMapping("admin/user/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "admin/user/create";
     }
 
@@ -101,6 +103,7 @@ public class UserController {
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         // User currentUser = userService.getUserById(id);
         model.addAttribute("newUser", userService.getUserById(id));
+        model.addAttribute("roles", roleService.getAllRoles());
         return "admin/user/update";
     }
 

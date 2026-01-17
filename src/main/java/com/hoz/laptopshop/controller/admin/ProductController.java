@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,7 +50,7 @@ public class ProductController {
             // TODO: handle exception
         }
 
-        Pageable pageable = PageRequest.of(page - 1, 20);
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
         Page<Product> prs = iProductService.fetchProducts(pageable);
         List<Product> listProducts = prs.getContent();
         model.addAttribute("products", listProducts);
@@ -126,6 +127,7 @@ public class ProductController {
 
     @GetMapping("/admin/product/delete/{id}")
     public String toggleProductStatus(@PathVariable long id,
+            @RequestParam(value = "page", defaultValue = "1") int page,
             RedirectAttributes redirectAttributes) {
         Optional<Product> productOptional = iProductService.fetchProductById(id);
         if (productOptional.isPresent()) {
@@ -142,7 +144,7 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("message",
                     "Product '" + product.getName() + "' status changed from " + oldStatus + " to " + newStatus);
         }
-        return "redirect:/admin/product";
+        return "redirect:/admin/product?page=" + page;
     }
 
     @GetMapping("/admin/product/{id}")

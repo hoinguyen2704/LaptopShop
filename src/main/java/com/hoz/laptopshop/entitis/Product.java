@@ -50,6 +50,15 @@ public class Product {
     private long sold;
     @Column(name = "factory")
     private String factory;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = true)
+    private Brand brand;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = true)
+    private Category category;
+    
     @Column(name = "target")
     private String target;
 

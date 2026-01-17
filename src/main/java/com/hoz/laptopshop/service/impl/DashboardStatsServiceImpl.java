@@ -1,4 +1,4 @@
-package com.hoz.laptopshop.service;
+package com.hoz.laptopshop.service.impl;
 
 import com.hoz.laptopshop.dto.response.DailyOrderStatsDTO;
 import com.hoz.laptopshop.dto.response.DashboardStatsDTO;
@@ -9,6 +9,9 @@ import com.hoz.laptopshop.entitis.enums.OrderStatus;
 import com.hoz.laptopshop.repository.IOrderRepository;
 import com.hoz.laptopshop.repository.IProductRepository;
 import com.hoz.laptopshop.repository.IUserRepository;
+import com.hoz.laptopshop.service.IDashboardStatsService;
+import com.hoz.laptopshop.service.IOrderService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class DashboardStatsService {
+public class DashboardStatsServiceImpl implements IDashboardStatsService {
 
         private final IOrderRepository orderRepository;
         private final IProductRepository productRepository;
@@ -33,6 +36,7 @@ public class DashboardStatsService {
          * 
          * @return DashboardStatsDTO chứa tất cả metrics
          */
+        @Override
         public DashboardStatsDTO getDashboardStats() {
                 // 1. Revenue 7 ngày
                 List<RevenueDTO> revenueData = orderService.getLast7DaysRevenue();

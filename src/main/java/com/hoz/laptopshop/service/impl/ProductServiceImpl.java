@@ -74,7 +74,7 @@ public class ProductServiceImpl implements IProductService {
             return this.iProductRepository.findAll(page);
         }
 
-        Specification<Product> combinedSpec = Specification.where((Specification<Product>) null);
+        Specification<Product> combinedSpec = Specification.anyOf();
 
         if (productCriteriaDTO.getTarget() != null && productCriteriaDTO.getTarget().isPresent()) {
             Specification<Product> currentSpecs = ProductSpecs.matchListTarget(productCriteriaDTO.getTarget().get());
@@ -96,7 +96,7 @@ public class ProductServiceImpl implements IProductService {
     // case 6
     @Override
     public Specification<Product> buildPriceSpecification(List<String> price) {
-        Specification<Product> combinedSpec = Specification.where((Specification<Product>) null); // disconjunction
+        Specification<Product> combinedSpec = Specification.anyOf(); // disjunction (OR)
         for (String p : price) {
             double min = 0;
             double max = 0;

@@ -1,5 +1,7 @@
 package com.hoz.laptopshop.service;
 
+import java.util.List;
+
 import com.hoz.laptopshop.entitis.Role;
 
 public interface IRoleService {
@@ -12,4 +14,5 @@ public interface IRoleService {
     Role createRole(Role role);
 
     void deleteRole(long id);
+    List<Role> getAllRoles();
 }

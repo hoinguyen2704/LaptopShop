@@ -3,7 +3,7 @@ package com.hoz.laptopshop.controller.admin;
 import com.hoz.laptopshop.dto.response.DashboardStatsDTO;
 import com.hoz.laptopshop.dto.response.RevenueDTO;
 import com.hoz.laptopshop.dto.response.TopCustomerDTO;
-import com.hoz.laptopshop.service.DashboardStatsService;
+import com.hoz.laptopshop.service.IDashboardStatsService;
 import com.hoz.laptopshop.service.IOrderService;
 import com.hoz.laptopshop.service.IUserService;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DashboardController {
 
-    private final DashboardStatsService dashboardStatsService;
+    private final IDashboardStatsService dashboardStatsService;
     private final IUserService userService;
     private final IOrderService orderService;
 

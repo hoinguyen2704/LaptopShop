@@ -4,6 +4,9 @@ import com.hoz.laptopshop.entitis.Role;
 import com.hoz.laptopshop.repository.IRoleRepository;
 import com.hoz.laptopshop.service.IRoleService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -34,5 +37,10 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public void deleteRole(long id) {
         roleRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
     }
 }
