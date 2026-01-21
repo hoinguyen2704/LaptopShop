@@ -10,7 +10,7 @@ Một website thương mại điện tử bán laptop được xây dựng với
 ### 🔐 Đăng Nhập
 ![Login Page](img/screenShort/loginPage.png)
 
-### 📦 Danh Sách Sản Phẩm
+### 📦 Chi Tiết Sản Phẩm
 ![Product Page](img/screenShort/ProductPage.png)
 
 ### 🛒 Giỏ Hàng
