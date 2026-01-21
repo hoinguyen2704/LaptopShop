@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hoz.laptopshop.entitis.Product;
+import com.hoz.laptopshop.entitis.Product_;
 import com.hoz.laptopshop.service.IProductService;
 import com.hoz.laptopshop.service.IUpLoadFileService;
 
@@ -50,7 +51,7 @@ public class ProductController {
             // TODO: handle exception
         }
 
-        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by(Product_.CREATED_AT).descending());
         Page<Product> prs = iProductService.fetchProducts(pageable);
         List<Product> listProducts = prs.getContent();
         model.addAttribute("products", listProducts);
@@ -118,6 +119,8 @@ public class ProductController {
             currentProduct.setShortDesc(pr.getShortDesc());
             currentProduct.setFactory(pr.getFactory());
             currentProduct.setTarget(pr.getTarget());
+            currentProduct.setBrand(pr.getBrand());
+            currentProduct.setCategory(pr.getCategory());
 
             iProductService.createProduct(currentProduct);
         }

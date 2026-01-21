@@ -7,7 +7,7 @@
 
             <head>
                 <meta charset="utf-8">
-                <title>Lịch Sử Mua Hàng - Laptopshop</title>
+                <title>Lịch Sử Mua Hàng - TechZone</title>
                 <meta content="width=device-width, initial-scale=1.0" name="viewport">
                 <meta content="" name="keywords">
                 <meta content="" name="description">
@@ -33,7 +33,10 @@
 
                 <!-- Template Stylesheet -->
                 <link href="/client/css/style.css" rel="stylesheet">
-
+                <!-- <script src="https://cdn.tailwindcss.com"></script>
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+                    rel="stylesheet">
+                <script src="https://unpkg.com/lucide@latest"></script> -->
                 <style>
                     body {
                         background-color: #f8f9fa;
@@ -61,7 +64,7 @@
                         border-radius: 8px;
                         display: flex;
                         align-items: center;
-                        justify-content-center;
+                        justify-content: center;
                         font-size: 1.5rem;
                     }
 
@@ -135,58 +138,64 @@
                         <c:forEach var="order" items="${orders}">
                             <div class="card order-card">
                                 <!-- Card Header: Order Info + Status -->
-                    <div class="card-header bg-white py-3 border-bottom">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <div class="d-flex flex-column">
-                                    <div class="mb-2">
-                                        <span class="fw-bold text-primary me-2">#DH-${order.id}</span>
-                                    </div>
-                                    <div class="small text-muted">
-                                        <i class="bi bi-calendar-plus me-1"></i>
-                                        <span class="fw-semibold">Ngày đặt:</span>
-                                        ${order.createdAt.toString().replace('T', ' ').substring(0, 19)}
-                                        <span class="mx-2">|</span>
-                                        <i class="bi bi-clock-history me-1"></i>
-                                        <span class="fw-semibold">Cập nhật:</span>
-                                        ${order.updatedAt.toString().replace('T', ' ').substring(0, 19)}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                                <div class="card-header bg-white py-3 border-bottom">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-8">
+                                            <div class="d-flex flex-column">
+                                                <div class="mb-2">
+                                                    <span class="fw-bold text-primary me-2">#DH-${order.id}</span>
+                                                </div>
+                                                <div class="small text-muted">
+                                                    <i class="bi bi-calendar-plus me-1"></i>
+                                                    <span class="fw-semibold">Ngày đặt:</span>
+                                                    ${order.createdAt.toString().replace('T', ' ').substring(0, 19)}
+                                                    <span class="mx-2">|</span>
+                                                    <i class="bi bi-clock-history me-1"></i>
+                                                    <span class="fw-semibold">Cập nhật:</span>
+                                                    ${order.updatedAt.toString().replace('T', ' ').substring(0, 19)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-md-end mt-2 mt-md-0">
                                             <!-- Status Badge -->
-                                <c:choose>
-                                    <c:when test="${order.status == 'COMPLETE'}">
-                                        <span class="badge px-4 py-2 rounded-pill" style="background-color: #d4edda; color: #155724; border: 2px solid #c3e6cb; font-size: 0.875rem; font-weight: 600;">
-                                            <i class="bi bi-check-circle-fill me-2"></i>Giao hàng thành công
-                                        </span>
-                                    </c:when>
-                                    <c:when test="${order.status == 'SHIPPING'}">
-                                        <span class="badge px-4 py-2 rounded-pill" style="background-color: #cfe2ff; color: #084298; border: 2px solid #b6d4fe; font-size: 0.875rem; font-weight: 600;">
-                                            <i class="bi bi-truck me-2"></i>Đang vận chuyển
-                                        </span>
-                                    </c:when>
-                                    <c:when test="${order.status == 'PENDING'}">
-                                        <span class="badge px-4 py-2 rounded-pill" style="background-color: #fff3cd; color: #856404; border: 2px solid #ffeaa7; font-size: 0.875rem; font-weight: 600;">
-                                            <i class="bi bi-clock-fill me-2"></i>Chờ xử lý
-                                        </span>
-                                    </c:when>
-                                    <c:when test="${order.status == 'CANCELLED'}">
-                                        <span class="badge px-4 py-2 rounded-pill" style="background-color: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; font-size: 0.875rem; font-weight: 600;">
-                                            <i class="bi bi-x-circle me-2"></i>Đã hủy
-                                        </span>
-                                    </c:when>
-                                    <c:when test="${order.status == 'RETURNED'}">
-                                        <span class="badge px-4 py-2 rounded-pill" style="background-color: #e2e3e5; color: #383d41; border: 2px solid #d6d8db; font-size: 0.875rem; font-weight: 600;">
-                                            <i class="bi bi-arrow-return-left me-2"></i>Đã hoàn trả
-                                        </span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="badge bg-secondary px-4 py-2 rounded-pill" style="font-size: 0.875rem; font-weight: 600;">
-                                            ${order.status}
-                                        </span>
-                                    </c:otherwise>
-                                </c:choose>
+                                            <c:choose>
+                                                <c:when test="${order.status == 'COMPLETE'}">
+                                                    <span class="badge px-4 py-2 rounded-pill"
+                                                        style="background-color: #d4edda; color: #155724; border: 2px solid #c3e6cb; font-size: 0.875rem; font-weight: 600;">
+                                                        <i class="bi bi-check-circle-fill me-2"></i>Giao hàng thành công
+                                                    </span>
+                                                </c:when>
+                                                <c:when test="${order.status == 'SHIPPING'}">
+                                                    <span class="badge px-4 py-2 rounded-pill"
+                                                        style="background-color: #cfe2ff; color: #084298; border: 2px solid #b6d4fe; font-size: 0.875rem; font-weight: 600;">
+                                                        <i class="bi bi-truck me-2"></i>Đang vận chuyển
+                                                    </span>
+                                                </c:when>
+                                                <c:when test="${order.status == 'PENDING'}">
+                                                    <span class="badge px-4 py-2 rounded-pill"
+                                                        style="background-color: #fff3cd; color: #856404; border: 2px solid #ffeaa7; font-size: 0.875rem; font-weight: 600;">
+                                                        <i class="bi bi-clock-fill me-2"></i>Chờ xử lý
+                                                    </span>
+                                                </c:when>
+                                                <c:when test="${order.status == 'CANCELLED'}">
+                                                    <span class="badge px-4 py-2 rounded-pill"
+                                                        style="background-color: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; font-size: 0.875rem; font-weight: 600;">
+                                                        <i class="bi bi-x-circle me-2"></i>Đã hủy
+                                                    </span>
+                                                </c:when>
+                                                <c:when test="${order.status == 'RETURNED'}">
+                                                    <span class="badge px-4 py-2 rounded-pill"
+                                                        style="background-color: #e2e3e5; color: #383d41; border: 2px solid #d6d8db; font-size: 0.875rem; font-weight: 600;">
+                                                        <i class="bi bi-arrow-return-left me-2"></i>Đã hoàn trả
+                                                    </span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="badge bg-secondary px-4 py-2 rounded-pill"
+                                                        style="font-size: 0.875rem; font-weight: 600;">
+                                                        ${order.status}
+                                                    </span>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>
@@ -195,7 +204,8 @@
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
                                         <table class="table table-hover mb-0 align-middle">
-                                            <thead class="bg-light text-secondary small text-uppercase" style="color: black !important;">
+                                            <thead class="bg-light text-secondary small text-uppercase"
+                                                style="color: black !important;">
                                                 <tr>
                                                     <th class="ps-4 py-3" style="width: 45%">Sản phẩm</th>
                                                     <th class="text-center py-3">Đơn giá</th>

@@ -7,8 +7,14 @@
                 <meta charset="utf-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                <meta name="description" content="Dự án laptopshop" />
+                <meta name="description" content="TechZone" />
                 <meta name="author" content="Hozinium" />
+                <meta name="_csrf" content="${_csrf.token}" />
+                <!-- default header name is X-CSRF-TOKEN -->
+                <meta name="_csrf_header" content="${_csrf.headerName}" />
+
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css"
+                    rel="stylesheet">
                 <title>Home</title>
                 <!-- Google Web Fonts -->
                 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +38,10 @@
 
                 <!-- Template Stylesheet -->
                 <link href="/client/css/style.css" rel="stylesheet">
+                <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+                <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+                    rel="stylesheet"> -->
+                <!-- <script src="https://unpkg.com/lucide@latest"></script> -->
             </head>
 
             <body>
@@ -58,9 +68,9 @@
 
 
 
-                <!-- Laptop Shop Start-->
+                <!-- TechZone Start-->
                 <jsp:include page="../layout/container_product.jsp" />
-                <!-- Laptop Shop End-->
+                <!-- TechZone End-->
                 <!-- Featurs Section Start -->
                 <jsp:include page="../layout/featurs.jsp" />
                 <!-- Featurs Section End -->
@@ -85,6 +95,8 @@
 
                 <!-- Template Javascript -->
                 <script src="/client/js/main.js"></script>
+                <script
+                    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
             </body>
 
             </html>

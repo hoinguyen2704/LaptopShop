@@ -1,6 +1,7 @@
 package com.hoz.laptopshop.controller.admin;
 
 import com.hoz.laptopshop.entitis.User;
+import com.hoz.laptopshop.entitis.User_;
 import com.hoz.laptopshop.service.IRoleService;
 import com.hoz.laptopshop.service.IUpLoadFileService;
 import com.hoz.laptopshop.service.IUserService;
@@ -45,7 +46,7 @@ public class UserController {
             // TODO: handle exception
         }
 
-        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by(User_.CREATED_AT).descending());
         Page<User> usersPage = userService.getAllUsers(pageable);
         List<User> users = usersPage.getContent();
         model.addAttribute("users1", users);

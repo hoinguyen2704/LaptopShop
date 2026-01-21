@@ -27,7 +27,7 @@
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
                     <a href="<c:url value='/'/>" class="navbar-brand">
-                        <h1 class="text-primary display-6">Laptop Shop</h1>
+                        <h1 class="text-primary display-6">TechZone</h1>
                     </a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse">
@@ -73,7 +73,8 @@
                                             </div>
                                         </li>
                                         <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
-                                        <li><a class="dropdown-item" href="<c:url value='/order-history'/>">Lịch sử mua hàng</a></li>
+                                        <li><a class="dropdown-item" href="<c:url value='/order-history'/>">Lịch sử mua
+                                                hàng</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>

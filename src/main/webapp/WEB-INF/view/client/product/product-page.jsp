@@ -8,7 +8,7 @@
 
                 <head>
                     <meta charset="utf-8">
-                    <title> Sản Phẩm - Laptopshop</title>
+                    <title> Sản Phẩm - TechZone</title>
                     <meta content="width=device-width, initial-scale=1.0" name="viewport">
                     <meta content="" name="keywords">
                     <meta content="" name="description">
@@ -34,6 +34,10 @@
 
                     <!-- Template Stylesheet -->
                     <link href="/client/css/style.css" rel="stylesheet">
+                    <!-- <script src="https://cdn.tailwindcss.com"></script>
+                    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+                        rel="stylesheet">
+                    <script src="https://unpkg.com/lucide@latest"></script> -->
                     <style>
                         .page-link.disabled {
                             color: var(--bs-pagination-disabled-color);
@@ -264,20 +268,22 @@
                                                             <span aria-hidden="true">&laquo;</span>
                                                         </a>
                                                     </li>
-                                                    
+
                                                     <!-- First Page (if not in visible range) -->
                                                     <c:if test="${currentPage > 3}">
                                                         <li class="page-item">
-                                                            <a class="page-link" href="/products?page=1${queryString}">1</a>
+                                                            <a class="page-link"
+                                                                href="/products?page=1${queryString}">1</a>
                                                         </li>
                                                         <li class="page-item disabled">
                                                             <span class="page-link">...</span>
                                                         </li>
                                                     </c:if>
-                                                    
+
                                                     <!-- Page Numbers (2 before, current, 2 after) -->
                                                     <c:forEach begin="1" end="${totalPages}" var="pageNum">
-                                                        <c:if test="${pageNum >= currentPage - 2 && pageNum <= currentPage + 2}">
+                                                        <c:if
+                                                            test="${pageNum >= currentPage - 2 && pageNum <= currentPage + 2}">
                                                             <li class="page-item">
                                                                 <a class="${pageNum eq currentPage ? 'active page-link' : 'page-link'}"
                                                                     href="/products?page=${pageNum}${queryString}">
@@ -286,17 +292,18 @@
                                                             </li>
                                                         </c:if>
                                                     </c:forEach>
-                                                    
+
                                                     <!-- Last Page (if not in visible range) -->
                                                     <c:if test="${currentPage < totalPages - 2}">
                                                         <li class="page-item disabled">
                                                             <span class="page-link">...</span>
                                                         </li>
                                                         <li class="page-item">
-                                                            <a class="page-link" href="/products?page=${totalPages}${queryString}">${totalPages}</a>
+                                                            <a class="page-link"
+                                                                href="/products?page=${totalPages}${queryString}">${totalPages}</a>
                                                         </li>
                                                     </c:if>
-                                                    
+
                                                     <!-- Next Button -->
                                                     <li class="page-item">
                                                         <a class="${totalPages eq currentPage ? 'disabled page-link' : 'page-link'}"

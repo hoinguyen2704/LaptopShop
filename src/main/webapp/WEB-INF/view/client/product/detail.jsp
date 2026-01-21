@@ -9,9 +9,9 @@
                     <meta charset="utf-8" />
                     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                    <meta name="description" content="Dự án laptopshop" />
+                    <meta name="description" content="TechZone" />
                     <meta name="author" content="Hozinium" />
-                    <title>${product.name} - LaptopShop</title>
+                    <title>${product.name} - TechZone</title>
                     <!-- Google Web Fonts -->
                     <link rel="preconnect" href="https://fonts.googleapis.com">
                     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,10 @@
 
                     <!-- Template Stylesheet -->
                     <link href="/client/css/style.css" rel="stylesheet">
+                    <!-- <script src="https://cdn.tailwindcss.com"></script>
+                    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+                        rel="stylesheet">
+                    <script src="https://unpkg.com/lucide@latest"></script> -->
                 </head>
 
                 <body>

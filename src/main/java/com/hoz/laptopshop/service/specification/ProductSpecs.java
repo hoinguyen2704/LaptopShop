@@ -11,6 +11,9 @@ public class ProductSpecs {
         return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
     }
 
+    public static Specification<Product> isActive(boolean isActive) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Product_.IS_ACTIVE), isActive);
+    }
     // case 1
     public static Specification<Product> minPrice(double price) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.ge(root.get(Product_.PRICE), price);

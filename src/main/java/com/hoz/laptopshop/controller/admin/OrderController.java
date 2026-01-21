@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hoz.laptopshop.entitis.Order;
+import com.hoz.laptopshop.entitis.Order_;
 import com.hoz.laptopshop.repository.IOrderRepository;
 import com.hoz.laptopshop.service.IOrderService;
 
@@ -41,7 +42,7 @@ public class OrderController {
         }
 
         // Tạo pageable với page size = 10, sort by createdAt DESC (mới nhất lên đầu)
-        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by(Order_.CREATED_AT).descending());
 
         // Lấy orders từ database với pagination
         Page<Order> ordersPage = this.orderRepository.findAll(pageable);

@@ -2,7 +2,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-            <!-- Laptop Shop Start-->
+            <!-- TechZone Start-->
             <div class="container-fluid fruite py-5">
                 <div class="container py-5">
                     <div class="tab-class text-center">
@@ -55,14 +55,17 @@
                                                                     style="font-size: 1.25rem; text-align: center; width: 100%;">
                                                                     <fmt:formatNumber value="${product.price}" /> đ
                                                                 </p>
-                                                                <form action="/add-product-to-cart/${product.id}" method="post">
-                                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                                                    <button type="submit"
-                                                                        class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                <!-- <form action="/add-product-to-cart/${product.id}"
+                                                                    method="post">
+                                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                                        value="${_csrf.token}" /> -->
+                                                                    <button type="submit" data-product-id="${product.id}"
+                                                                        class="btnAddToCartHomePage btn border border-secondary rounded-pill px-3 text-primary">
+                                                                        <i
+                                                                            class="fa fa-shopping-bag me-2 text-primary"></i>
                                                                         Add to
                                                                         cart</button>
-                                                                </form>
+                                                                <!-- </form> -->
 
                                                             </div>
                                                         </div>
@@ -77,4 +80,4 @@
                     </div>
                 </div>
             </div>
-            <!-- Laptop Shop End-->
+            <!-- TechZone End-->

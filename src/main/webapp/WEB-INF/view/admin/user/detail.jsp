@@ -8,7 +8,7 @@
                 <meta charset="utf-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                <meta name="description" content="Dự án laptopshop" />
+                <meta name="description" content="TechZone" />
                 <meta name="author" content="Hozinium" />
                 <title>Detail User</title>
                 <link href="/css/styles.css" rel="stylesheet" />
@@ -48,11 +48,13 @@
                                                     <li class="list-group-item">FullName: ${user.fullName}</li>
                                                     <li class="list-group-item">Address: ${user.address}</li>
                                                     <li class="list-group-item">Role: ${user.role.name}</li>
-                                                    <li class="list-group-item">Role Description: ${user.role.description}</li>
+                                                    <li class="list-group-item">Role Description:
+                                                        ${user.role.description}</li>
                                                     <li class="list-group-item">
                                                         <div class="col-12 mb-3">
                                                             <img style="max-height: 250px; display: block;"
-                                                                alt="avatar preview" id="avatarPreview" src="/images/avatar/${user.avatar}"/>
+                                                                alt="avatar preview" id="avatarPreview"
+                                                                src="/images/avatar/${user.avatar}" />
                                                         </div>
                                                     </li>
 

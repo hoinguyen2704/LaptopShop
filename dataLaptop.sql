@@ -84,3 +84,9 @@ FROM users u
 WHERE o.status = 'COMPLETE'
 GROUP BY u.id
 ORDER BY total_spent DESC;
+
+
+select u.id, o.id
+from users u
+         INNER join orders o on u.id = o.user_id;
+

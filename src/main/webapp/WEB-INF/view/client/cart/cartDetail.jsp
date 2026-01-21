@@ -8,7 +8,7 @@
 
                 <head>
                     <meta charset="utf-8">
-                    <title> Giỏ hàng - Laptopshop</title>
+                    <title> Giỏ hàng - TechZone</title>
                     <meta content="width=device-width, initial-scale=1.0" name="viewport">
                     <meta content="" name="keywords">
                     <meta content="" name="description">
@@ -35,6 +35,10 @@
 
                     <!-- Template Stylesheet -->
                     <link href="/client/css/style.css" rel="stylesheet">
+                    <!-- <script src="https://cdn.tailwindcss.com"></script>
+                    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+                        rel="stylesheet">
+                    <script src="https://unpkg.com/lucide@latest"></script> -->
                 </head>
 
                 <body>
@@ -50,7 +54,7 @@
 
                     <!-- Cart Page Start -->
                     <div class="container-fluid py-5 mt-5 ">
-                        <div class="container py-5 mt-5" >
+                        <div class="container py-5 mt-5">
                             <div class="mb-3">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
@@ -98,7 +102,8 @@
                                                 </td>
                                                 <td>
                                                     <p class="mb-0 mt-4">
-                                                        <fmt:formatNumber type="number" value="${cartDetail.price}" minFractionDigits="2" maxFractionDigits="2" /> đ
+                                                        <fmt:formatNumber type="number" value="${cartDetail.price}"
+                                                            minFractionDigits="2" maxFractionDigits="2" /> đ
                                                     </p>
                                                 </td>
                                                 <td>
@@ -127,7 +132,8 @@
                                                 <td>
                                                     <p class="mb-0 mt-4" data-cart-detail-id="${cartDetail.id}">
                                                         <fmt:formatNumber type="number"
-                                                            value="${cartDetail.price * cartDetail.quantity}" minFractionDigits="2" maxFractionDigits="2" /> đ
+                                                            value="${cartDetail.price * cartDetail.quantity}"
+                                                            minFractionDigits="2" maxFractionDigits="2" /> đ
                                                     </p>
                                                 </td>
                                                 <td>
@@ -156,7 +162,8 @@
                                                 <div class="d-flex justify-content-between mb-4">
                                                     <h5 class="mb-0 me-4">Tạm tính:</h5>
                                                     <p class="mb-0" data-cart-total-price="${totalPrice}">
-                                                        <fmt:formatNumber type="number" value="${totalPrice}" minFractionDigits="2" maxFractionDigits="2" /> đ
+                                                        <fmt:formatNumber type="number" value="${totalPrice}"
+                                                            minFractionDigits="2" maxFractionDigits="2" /> đ
                                                     </p>
                                                 </div>
                                                 <div class="d-flex justify-content-between">
@@ -170,7 +177,8 @@
                                                 class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                                 <h5 class="mb-0 ps-4 me-4">Tổng số tiền</h5>
                                                 <p class="mb-0 pe-4" data-cart-total-price="${totalPrice}">
-                                                    <fmt:formatNumber type="number" value="${totalPrice}" minFractionDigits="2" maxFractionDigits="2" /> đ
+                                                    <fmt:formatNumber type="number" value="${totalPrice}"
+                                                        minFractionDigits="2" maxFractionDigits="2" /> đ
                                                 </p>
                                             </div>
                                             <form:form action="/confirm-checkout" method="post" modelAttribute="cart">
